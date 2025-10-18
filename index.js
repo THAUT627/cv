@@ -7,3 +7,4 @@ tailwind.config = {
     }
   }
 };
+module.exports = tailwind.config;
