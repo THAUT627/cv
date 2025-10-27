@@ -43,7 +43,7 @@ Construire de nouvelles tours et améliorer celles déjà placées.
 
 Si trop de créatures atteignent le village, celui-ci s’embrase et le joueur perd la partie.
 
-## Autres éléments
+# Autres éléments
 
 Types d’ennemis variés :
 - Golem de lave (lent mais solide),
