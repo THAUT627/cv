@@ -20,10 +20,9 @@ Il faut choisir entre placer plusieurs tours faibles ou quelques tours puissante
 
 ## Vagues d’ennemis
 
-Les créatures de magma apparaissent par vagues successives et suivent un chemin tracé par les coulées de lave.
-Chaque nouvelle vague rend le volcan plus dangereux :
+Les créatures de magma apparaissent par vagues successives et suivent un chemin tracé:
 
-- Les ennemis deviennent plus rapides ou plus résistants,
+- Les ennemis deviennent plus rapides,
 - Certains laissent derrière eux des traces de feu ralentissant les tirs des tours.
 
 ## Attaques automatiques
