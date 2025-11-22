@@ -49,3 +49,11 @@ Types d’ennemis variés :
 - Esprit de feu (rapide mais fragile),
 - Titan de magma (boss de fin).
 Système d’amélioration de tours (niveaux de puissance).
+
+# Avancement du projet
+## 18/11/25
+J'ai fait un autre niveau en rapport avec la lave, j'ai réaliser les décors sur libresprite (je pars sur un niveau  pixel art, les ennemies sont à venir).
+Je n'ai pas réussi à le faire fonctionner.
+## 22/11/25
+J'ai réussi à le faire foncitonner (affichage de la carte avec mes graphismes), il y avait un probleme de dimension non respecté et des fihciers mal nommmés.
+
