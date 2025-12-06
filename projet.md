@@ -57,3 +57,9 @@ Je n'ai pas réussi à le faire fonctionner.
 ## 22/11/25
 J'ai réussi à le faire foncitonner (affichage de la carte avec mes graphismes), il y avait un probleme de dimension non respecté et des fihciers mal nommmés.
 
+## testProjet1
+J'ai fait un autre niveau en rapport avec la lave, j'ai réaliser les décors sur libresprite (je pars sur un niveau  pixel art, les ennemies sont à venir). J'ai réussi à le faire foncitonner (affichage de la carte avec mes graphismes), il y avait un probleme de dimension non respecté et des fihciers mal nommmés.
+
+## testProjet2
+J'ai ajouté le son de fond lorsque l'on lance le jeu.
+
