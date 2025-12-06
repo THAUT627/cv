@@ -7,9 +7,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'level1',
         // Path to map data
-        data: 'assets/maps/Level1/map.json',
+        data: 'testprojet1/assets/maps/Level1/map.json',
         // Path to map sprite
-        sprite: 'assets/maps/Level1/map.png',
+        sprite: 'testprojet1/assets/maps/Level1/map.png',
         // Readable name for this map/level
         name: 'Level 1',
         // Start point for the enemies
@@ -32,9 +32,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'BeachDefense',
         // Path to map data
-        data: 'assets/maps/BeachDefense/map.json',
+        data: 'testprojet1/assets/maps/BeachDefense/map.json',
         // Path to map sprite
-        sprite: 'assets/maps/BeachDefense/map.png',
+        sprite: 'testprojet1/assets/maps/BeachDefense/map.png',
         // Readable name for this map/level
         name: 'Beach Defense',
         // Start point for the enemies

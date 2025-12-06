@@ -10,7 +10,7 @@ class TowerManager {
 		];
 
 		this.towerTypes.forEach(tower => {
-			this.game.load.json(tower.key + '_properties', 'assets/towers/' + tower.key + '/properties.json');
+			this.game.load.json(tower.key + '_properties', 'testprojet1/assets/towers/' + tower.key + '/properties.json');
 		});
 	}
 
@@ -22,7 +22,7 @@ class TowerManager {
 
 		    towerProperties.tiers.forEach((tier, i) => {
 				// TODO tier specific spritesheets
-				let path = 'assets/towers/' + tower.key + '/';
+				let path = 'testprojet1/assets/towers/' + tower.key + '/';
 				tier.spritesheet_tower = tower.key + '_' + i  + '_spritesheet_tower';
 				tier.spritesheet_shot = tower.key + '_' + i  + '_spritesheet_shot';
 
