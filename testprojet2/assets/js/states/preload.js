@@ -27,6 +27,7 @@ tinydefence.preload.prototype = {
 			'testprojet2/assets/fonts/font_red.png',
 			'testprojet2/assets/fonts/font_red.fnt');
 
+		this.game.load.audio("background_music", "testprojet2/assets/audio/bgm.mp3");
 		// Load all defined maps in maps.js
 		tinydefence.maps.forEach(map => {
 			this.game.load.tilemap(map.key, map.data, null, Phaser.Tilemap.TILED_JSON);
