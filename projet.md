@@ -73,38 +73,3 @@ J'ai ajouté le son de fond lorsque l'on lance le jeu.
 
 
 ## Diagramme de flux
-
-flowchart TD
-
-    %% --- ÉTATS PRINCIPAUX ---
-    A[Accueil / Menu] --> B[Démarrer la partie]
-
-    B --> C[Initialisation du jeu<br/>• Charger les assets<br/>• Générer les cartes<br/>• Appliquer la difficulté]
-
-    C --> D[Affichage des cartes<br/>sur la scène]
-
-    D --> E[Attente du joueur]
-
-    %% --- LOGIQUE DE JEU ---
-    E -->|Clique sur une carte| F[Révéler 1ʳᵉ carte]
-
-    F --> E2[Attente du deuxième clic]
-
-    E2 -->|Clique sur une carte| G[Révéler 2ᵉ carte]
-
-    G --> H{Cartes identiques ?}
-
-    %% MATCH
-    H -->|Oui| I[Valider la paire<br/>• Désactiver les cartes<br/>• Ajouter au score]
-    I --> J{Toutes les paires trouvées ?}
-
-    J -->|Oui| K[Fin de partie<br/>• Calcul du temps<br/>• Enregistrer les données<br/>• Afficher écran final]
-
-    J -->|Non| E[Continuer la partie]
-
-    %% PAS MATCH
-    H -->|Non| L[Erreur<br/>• Attendre un délai<br/>• Retourner les cartes]
-    L --> E
-
-    %% FIN
-    K --> M[Aller à l'historique / Rejouer]
