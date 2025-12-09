@@ -54,7 +54,7 @@ tinydefence.maps = [
     },
     {
     // Key for this map
-        key: 'LavaDefense',
+        key: 'LavaDefense_0',
         // Path to map data
         data: 'testprojet3/assets/maps/LavaDefense/map.json',
         // Path to map sprite
@@ -77,5 +77,29 @@ tinydefence.maps = [
             // Add more waves here
         ]
     },
-    
+    {
+    // Key for this map
+        key: 'LavaDefense_1',
+        // Path to map data
+        data: 'testprojet3/assets/maps/LavaDefense/map1.json',
+        // Path to map sprite
+        sprite: 'testprojet3/assets/maps/LavaDefense/map1.png',
+        // Readable name for this map/level
+        name: 'Lava Defense (alt 1)',
+        // Start point for the enemies
+        start: {x: 0, y: 3},
+        // End point for the enemies
+        end: {x: 29, y: 1},
+        // Waves
+        waves: [
+            {dropInMillis: 1500, maxEnemies: 2,  enemyHealth: 10, enemySpeed: 20, points: 5, type: 'enemy'},
+            {dropInMillis: 1500, maxEnemies: 4,  enemyHealth: 20, enemySpeed: 40, points: 5, type: 'enemy'},
+            {dropInMillis: 2000, maxEnemies: 6,  enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy'},
+            {dropInMillis: 1500, maxEnemies: 8,  enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy'},
+            {dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy'},
+            {dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy'},
+            {dropInMillis: 800,  maxEnemies: 20, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy'},
+            // Add more waves here
+        ]
+    },   
 ];
