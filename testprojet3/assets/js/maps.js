@@ -85,7 +85,7 @@ tinydefence.maps = [
         // Path to map sprite
         sprite: 'testprojet3/assets/maps/LavaDefense/map1.png',
         // Readable name for this map/level
-        name: 'Lava Defense (alt 1)',
+        name: 'Lava Defense',
         // Start point for the enemies
         start: {x: 0, y: 3},
         // End point for the enemies

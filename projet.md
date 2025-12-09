@@ -64,12 +64,3 @@ J'ai fait un autre niveau en rapport avec la lave, j'ai réaliser les décors su
 J'ai ajouté le son de fond lorsque l'on lance le jeu.
 
 ## testProjet3
-
-
-
-
-
-
-
-
-## Diagramme de flux
