@@ -53,7 +53,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense_0',
+        key: 'LavaDefense',
         data: 'testprojet3/assets/maps/LavaDefense/map.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map.png',
         name: "Lava Defense 1",
@@ -70,7 +70,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense_1',
+        key: 'LavaDefense',
         data: 'testprojet3/assets/maps/LavaDefense/map1.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map1.png',
         name: "Lava Defense 2",
@@ -87,7 +87,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense_2',
+        key: 'LavaDefense',
         data: 'testprojet3/assets/maps/LavaDefense/map2.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map2.png',
         name: "Lava Defense 3",
@@ -104,7 +104,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense_3',
+        key: 'LavaDefense',
         data: 'testprojet3/assets/maps/LavaDefense/map2.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map2.png',
         name: "Lava Defense 4",
