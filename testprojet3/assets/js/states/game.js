@@ -33,42 +33,50 @@ tinydefence.rungame = {
     },
 
     createMap() {
-        // Load current map entry from maps.js
+
         let baseMap = tinydefence.maps[this.model.currentMapIndex];
 
-        // If the map has variants → pick one randomly
+        // Case: map with variants
         if (baseMap.variants && baseMap.variants.length > 0) {
+
             let variant = this.game.rnd.pick(baseMap.variants);
 
-            // Build final map object for this run
             this.currentMap = {
                 key: variant.key,
-                data: variant.data,
-                sprite: variant.sprite,
-                name: baseMap.name,
-                start: baseMap.start,
-                end: baseMap.end,
-                waves: baseMap.waves
+                name: variant.name || baseMap.name, // use base name if no variant name
+                start: variant.start,
+                end: variant.end,
+                waves: variant.waves
             };
+
         }
+        // Case: simple map
         else {
-            // No variants, normal map
+
             this.currentMap = baseMap;
         }
 
-        // Create tilemap using selected key
+        // Create tilemap
         this.map = this.game.add.tilemap(this.currentMap.key);
         this.map.addTilesetImage('Sprites', this.currentMap.key + '_sprites');
+
         this.layer = this.map.createLayer('Level');
         this.layer.scale.setTo(tinydefence.scalefactor, tinydefence.scalefactor);
 
-        let mapdata = this.game.cache.getTilemapData(this.currentMap.key).data.layers[0].data;
-        let waypointdata = this.game.cache.getTilemapData(this.currentMap.key).data.layers[1].data;
+        let tilemapData = this.game.cache.getTilemapData(this.currentMap.key).data;
+
+        let mapdata = tilemapData.layers[0].data;
+        let waypointdata = tilemapData.layers[1].data;
 
         this.defencegame = new DefenceGame(
             tinydefence.constants.TILE_WIDTH * tinydefence.scalefactor,
             tinydefence.constants.TILE_HEIGHT * tinydefence.scalefactor,
-            30, 15, mapdata, waypointdata, this.game, this.model
+            30,
+            15,
+            mapdata,
+            waypointdata,
+            this.game,
+            this.model
         );
 
         tinydefence.game.world.bringToTop(tinydefence.game.ui.buttonCoverage);
