@@ -33,37 +33,42 @@ tinydefence.rungame = {
     },
 
     createMap() {
-        
+
         this.currentMap = tinydefence.maps[this.model.currentMapIndex];
 
-        // Create tilemap
+        // Tilemap
         this.map = this.game.add.tilemap(this.currentMap.key);
         this.map.addTilesetImage('Sprites', this.currentMap.key + '_sprites');
 
-        // IMPORTANT : créer la layer Level
+        // Layer Level
         this.layer = this.map.createLayer('Level');
         this.layer.scale.setTo(tinydefence.scalefactor, tinydefence.scalefactor);
 
+        // Récupération safe des données
         let tilemapData = this.game.cache.getTilemapData(this.currentMap.key).data;
 
-        // ⚠️ ON VA CORRIGER ÇA JUSTE APRÈS
-        let mapdata = tilemapData.layers[0].data;
-        let waypointdata = tilemapData.layers[1].data;
+        let levelLayer = tilemapData.layers.find(l => l.name === "Level");
+        let waypointLayer = tilemapData.layers.find(l => l.name === "Waypoints");
+
+        if (!levelLayer || !waypointLayer) {
+            console.error("Layer manquant dans la map :", this.currentMap.key);
+            console.log(tilemapData.layers.map(l => l.name));
+            return;
+        }
 
         this.defencegame = new DefenceGame(
             tinydefence.constants.TILE_WIDTH * tinydefence.scalefactor,
             tinydefence.constants.TILE_HEIGHT * tinydefence.scalefactor,
             30,
             15,
-            mapdata,
-            waypointdata,
+            levelLayer.data,
+            waypointLayer.data,
             this.game,
             this.model
         );
 
         tinydefence.game.world.bringToTop(tinydefence.game.ui.buttonCoverage);
-    }
-    ,
+    },
 
     nextWaveOrLevel() {
 
