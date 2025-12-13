@@ -77,23 +77,5 @@ tinydefence.maps = [
             // Add more waves here
         ]
     },
-    {
-        key: 'LavaDefense',
-        data: 'testprojet3/assets/maps/LavaDefense/map1.json',
-        sprite: 'testprojet3/assets/maps/LavaDefense/map1.png',
-        name: "Lava Defense 2",
-        start: { x: 0, y: 3 },
-        end: { x: 29, y: 1 },
-        waves: [
-            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'enemy' },
-            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 800, maxEnemies: 20, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            // Add more waves here
-        ]
-    },
 
 ];
