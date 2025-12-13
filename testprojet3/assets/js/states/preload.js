@@ -32,41 +32,24 @@ tinydefence.preload.prototype = {
 		// Load all defined maps in maps.js
 		tinydefence.maps.forEach(map => {
 
-			// Case: map with variants (ex: LavaDefense)
-			if (map.variants && map.variants.length > 0) {
-
-				map.variants.forEach(variant => {
-
-					this.game.load.tilemap(
-						variant.key,
-						variant.data,
-						null,
-						Phaser.Tilemap.TILED_JSON
-					);
-
-					this.game.load.image(
-						variant.key + '_sprites',
-						variant.sprite
-					);
-				});
-
+			if (!map.key || !map.data || !map.sprite) {
+				console.warn("Map invalide ignorée :", map);
+				return;
 			}
-			// Case: simple map (level1, BeachDefense)
-			else {
 
-				this.game.load.tilemap(
-					map.key,
-					map.data,
-					null,
-					Phaser.Tilemap.TILED_JSON
-				);
+			this.game.load.tilemap(
+				map.key,
+				map.data,
+				null,
+				Phaser.Tilemap.TILED_JSON
+			);
 
-				this.game.load.image(
-					map.key + '_sprites',
-					map.sprite
-				);
-			}
+			this.game.load.image(
+				map.key + '_sprites',
+				map.sprite
+			);
 		});
+
 
 		// Load all tower assets
 		tinydefence.towerManager.load();
