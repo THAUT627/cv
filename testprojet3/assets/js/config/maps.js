@@ -60,7 +60,7 @@ tinydefence.maps = [
                 key: 'LavaDefense_0',
                 data: 'testprojet3/assets/maps/LavaDefense/map.json',
                 sprite: 'testprojet3/assets/maps/LavaDefense/map.png',
-                start: { x: 0, y: 3 },
+                start: { x: 1, y: 3 },
                 end: { x: 29, y: 1 },
                 waves: [
                     { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 15, enemySpeed: 30, points: 10, type: 'crab' },
@@ -76,7 +76,7 @@ tinydefence.maps = [
                 key: 'LavaDefense_1',
                 data: 'testprojet3/assets/maps/LavaDefense/map1.json',
                 sprite: 'testprojet3/assets/maps/LavaDefense/map1.png',
-                start: { x: 0, y: 3 },
+                start: { x: 1, y: 3 },
                 end: { x: 29, y: 1 },
                 waves: [
                     { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 15, enemySpeed: 30, points: 10, type: 'crab' },
@@ -92,7 +92,7 @@ tinydefence.maps = [
                 key: 'LavaDefense_2',
                 data: 'testprojet3/assets/maps/LavaDefense/map2.json',
                 sprite: 'testprojet3/assets/maps/LavaDefense/map2.png',
-                start: { x: 0, y: 3 },
+                start: { x: 1, y: 3 },
                 end: { x: 29, y: 1 },
                 waves: [
                     { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 15, enemySpeed: 30, points: 10, type: 'crab' },
