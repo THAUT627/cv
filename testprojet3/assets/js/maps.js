@@ -53,7 +53,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense',
+        key: 'LavaDefense', 
         data: 'testprojet3/assets/maps/LavaDefense/map.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map.png',
         name: "Lava Defense 1",
@@ -105,8 +105,8 @@ tinydefence.maps = [
     },
     {
         key: 'LavaDefense',
-        data: 'testprojet3/assets/maps/LavaDefense/map2.json',
-        sprite: 'testprojet3/assets/maps/LavaDefense/map2.png',
+        data: 'testprojet3/assets/maps/LavaDefense/map3.json',
+        sprite: 'testprojet3/assets/maps/LavaDefense/map3.png',
         name: "Lava Defense 4",
         start: { x: 1, y: 3 },
         end: { x: 29, y: 1 },
