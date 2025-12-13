@@ -35,7 +35,7 @@ tinydefence.rungame = {
     createMap() {
 
         this.currentMap = tinydefence.maps[this.model.currentMapIndex];
-
+        console.log("Loading map:", this.currentMap.key, this.currentMap.name); // Debug log
         // Create tilemap
         this.map = this.game.add.tilemap(this.currentMap.key);
         this.map.addTilesetImage('Sprites', this.currentMap.key + '_sprites');
