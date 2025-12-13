@@ -3,7 +3,9 @@
  <editorsettings>
   <export target="map.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" source="Sprites.tsx"/>
+ <tileset firstgid="1" name="Sprites" tilewidth="16" tileheight="16" tilecount="72" columns="8">
+  <image source="../../../../../../../../../Telechargement/tOWER DEFENSE  GAME/1x/map2/map2.png" width="128" height="144"/>
+ </tileset>
  <layer id="2" name="Level" width="30" height="15">
   <data encoding="csv">
 71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,
