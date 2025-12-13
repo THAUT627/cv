@@ -38,7 +38,7 @@ tinydefence.maps = [
         // Readable name for this map/level
         name: 'Beach Defense',
         // Start point for the enemies
-        start: { x: 1, y: 10 },
+        start: { x: 0, y: 10 },
         // End point for the enemies
         end: { x: 28, y: 10 },
         // Waves
@@ -53,11 +53,11 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense',
+        key: 'LavaDefense_0',
         data: 'testprojet3/assets/maps/LavaDefense/map.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map.png',
         name: "Lava Defense 1",
-        start: { x: 1, y: 3 },
+        start: { x: 0, y: 3 },
         end: { x: 29, y: 1 },
         waves: [
             { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 15, enemySpeed: 30, points: 10, type: 'crab' },
@@ -70,11 +70,11 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense',
+        key: 'LavaDefense_1',
         data: 'testprojet3/assets/maps/LavaDefense/map1.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map1.png',
         name: "Lava Defense 2",
-        start: { x: 1, y: 3 },
+        start: { x: 0, y: 3 },
         end: { x: 29, y: 1 },
         waves: [
             { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 15, enemySpeed: 30, points: 10, type: 'crab' },
@@ -87,7 +87,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense',
+        key: 'LavaDefense_2',
         data: 'testprojet3/assets/maps/LavaDefense/map2.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map2.png',
         name: "Lava Defense 3",
@@ -104,7 +104,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense',
+        key: 'LavaDefense_3',
         data: 'testprojet3/assets/maps/LavaDefense/map2.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map2.png',
         name: "Lava Defense 4",
