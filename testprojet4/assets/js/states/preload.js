@@ -22,6 +22,8 @@ tinydefence.preload.prototype = {
 		this.game.load.image('restartBtn', 'testprojet4/assets/images/ui/restart_button.png');
 		this.game.load.image('soundOnBtn', 'testprojet4/assets/images/ui/sound_on.png');
 		this.game.load.image('soundOffBtn', 'testprojet4/assets/images/ui/sound_off.png');
+		this.game.load.image('playBtn', 'testprojet4/assets/images/ui/bouton_play.png');
+		this.game.load.image('pauseBtn', 'testprojet4/assets/images/ui/bouton_pause.png');
 
 		this.game.load.bitmapFont('font_white',
 			'testprojet4/assets/fonts/font.png',
