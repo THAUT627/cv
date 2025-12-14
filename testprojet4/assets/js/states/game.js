@@ -12,8 +12,8 @@ tinydefence.rungame = {
     create: function () {
         // Set cavans background
         this.game.stage.backgroundColor = "#1e1a17";
-        this.music = this.game.add.audio("background_music", 0.5, true); // volume, loop
-        this.music.play();
+        // this.music = this.game.add.audio("background_music", 0.5, true); // volume, loop
+        // this.music.play();
         this.game.time.advancedTiming = true;
         this.game.time.desiredFps = 60;
         this.game.time.slowMotion = 1.0;
@@ -39,8 +39,13 @@ tinydefence.rungame = {
             'pauseBtn' // ou un bouton pause dédié si tu en as un
         );
 
-        this.pauseButton.fixedToCamera = true;
-        this.pauseButton.inputEnabled = true;
+        this.pauseBtn = this.game.add.sprite(10, 10, 'pauseBtn');
+        this.pauseBtn.inputEnabled = true;
+        this.pauseBtn.input.useHandCursor = true;
+        this.pauseBtn.fixedToCamera = true;
+
+        this.game.world.bringToTop(this.pauseBtn);
+
 
         this.pauseButton.events.onInputDown.add(() => {
             this.togglePause(true);
