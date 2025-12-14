@@ -56,7 +56,7 @@ tinydefence.maps = [
         key: 'LavaDefense', 
         data: 'testprojet3/assets/maps/LavaDefense/map.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map.png',
-        name: "Lava Defense1",
+        name: "Lava Defense",
         start: { x: 0, y: 3 },
         end: { x: 29, y: 1 },
         waves: [
