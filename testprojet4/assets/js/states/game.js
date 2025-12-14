@@ -36,7 +36,7 @@ tinydefence.rungame = {
         this.pauseButton = this.game.add.sprite(
             this.game.width - 30,
             10,
-            'buttonMenuNav' // ou un bouton pause dédié si tu en as un
+            'pauseBtn' // ou un bouton pause dédié si tu en as un
         );
 
         this.pauseButton.fixedToCamera = true;
@@ -140,6 +140,16 @@ tinydefence.rungame = {
         this.game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(() => {
             this.togglePause(!this.game.paused);
         });
+
+        if (!this.game.backgroundMusic) {
+            this.game.backgroundMusic = this.game.add.audio('background_music');
+            this.game.backgroundMusic.loop = true;
+            this.game.backgroundMusic.volume = 0.5;
+            this.game.backgroundMusic.play();
+        }
+
+        this.music = this.game.backgroundMusic;
+
 
     },
 
@@ -288,14 +298,17 @@ tinydefence.rungame = {
         this.pauseGroup.visible = pause;
         this.pauseButton.inputEnabled = !pause;
 
-        if (!pause) {
+        if (pause) {
+            this.music.pause();
+        } else {
             this.music.resume();
         }
     },
 
 
     toggleSound: function (enable) {
-        this.game.sound.mute = !enable;
+        this.music.mute = !enable;
+
         this.soundOnBtn.visible = enable;
         this.soundOffBtn.visible = !enable;
     },
