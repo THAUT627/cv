@@ -79,13 +79,13 @@ tinydefence.maps = [
     },
     {
         // Key for this map
-        key: 'LavaDefense1',
+        key: 'LavaDefense2',
         // Path to map data
-        data: 'testprojet2/assets/maps/LavaDefense1/map.json',
+        data: 'testprojet2/assets/maps/LavaDefense2/map2.json',
         // Path to map sprite
-        sprite: 'testprojet2/assets/maps/LavaDefense1/map.png',
+        sprite: 'testprojet2/assets/maps/LavaDefense2/map2.png',
         // Readable name for this map/level
-        name: 'Lava Defense1',
+        name: 'Lava Defense 2',
         // Start point for the enemies
         start: { x: 0, y: 3 },
         // End point for the enemies
