@@ -17,6 +17,12 @@ tinydefence.preload.prototype = {
 		this.game.load.spritesheet('buttonLevel', 'testprojet4/assets/images/ui/buttonLevel.png', 225, 35);
 		this.game.load.spritesheet('buttonMenuNav', 'testprojet4/assets/images/ui/buttonMenuNav.png', 20, 18);
 
+		this.game.load.image('pauseMenu', 'assets/images/ui/PauseMenu.png');
+		this.game.load.image('resumeBtn', 'assets/images/ui/ResumeButton.png');
+		this.game.load.image('restartBtn', 'assets/images/ui/RestartButton.png');
+		this.game.load.image('soundOnBtn', 'assets/images/ui/SoundOnButton.png');
+		this.game.load.image('soundOffBtn', 'assets/images/ui/SoundOffButton.png');
+
 		this.game.load.bitmapFont('font_white',
 			'testprojet4/assets/fonts/font.png',
 			'testprojet4/assets/fonts/font.fnt');
