@@ -53,7 +53,7 @@ tinydefence.maps = [
         ]
     },
     {
-        key: 'LavaDefense1', 
+        key: 'LavaDefense', 
         data: 'testprojet3/assets/maps/LavaDefense/map.json',
         sprite: 'testprojet3/assets/maps/LavaDefense/map.png',
         name: "Lava Defense1",
