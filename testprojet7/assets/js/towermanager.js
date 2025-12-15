@@ -19,6 +19,7 @@ class TowerManager {
 
 	load() {
 		this.towerTypes.forEach(tower => {
+			console.log('Loaded tower:', tower.key);
 			let towerProperties = this.game.cache.getJSON(tower.key + '_properties');
 			tower.color = towerProperties.color;
 			tower.tiers = towerProperties.tiers;
