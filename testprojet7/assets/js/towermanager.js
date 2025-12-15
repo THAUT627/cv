@@ -4,9 +4,12 @@ class TowerManager {
 		this.game = game;
 
 		this.towerTypes = [
-		    {
-		        key: 'Cannon'
-		    }
+			{
+				key: 'Cannon'
+			},
+			{
+				key: 'AntiChicken'
+			}
 		];
 
 		this.towerTypes.forEach(tower => {
@@ -16,19 +19,19 @@ class TowerManager {
 
 	load() {
 		this.towerTypes.forEach(tower => {
-		    let towerProperties = this.game.cache.getJSON(tower.key + '_properties');
-		    tower.color = towerProperties.color;
-		    tower.tiers = towerProperties.tiers;
+			let towerProperties = this.game.cache.getJSON(tower.key + '_properties');
+			tower.color = towerProperties.color;
+			tower.tiers = towerProperties.tiers;
 
-		    towerProperties.tiers.forEach((tier, i) => {
+			towerProperties.tiers.forEach((tier, i) => {
 				// TODO tier specific spritesheets
 				let path = 'testprojet7/assets/towers/' + tower.key + '/';
-				tier.spritesheet_tower = tower.key + '_' + i  + '_spritesheet_tower';
-				tier.spritesheet_shot = tower.key + '_' + i  + '_spritesheet_shot';
+				tier.spritesheet_tower = tower.key + '_' + i + '_spritesheet_tower';
+				tier.spritesheet_shot = tower.key + '_' + i + '_spritesheet_shot';
 
 				this.game.load.spritesheet(tier.spritesheet_tower, path + tier.sprites.tower, 16, 16);
 				this.game.load.image(tier.spritesheet_shot, path + tier.sprites.shot);
-		    });
+			});
 		});
 	}
 

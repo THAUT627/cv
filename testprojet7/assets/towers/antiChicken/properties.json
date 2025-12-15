@@ -1,0 +1,31 @@
+{
+	"color": "0xA52A2A",
+	"tiers": [
+		{
+			"attributes": {
+				"price": 80,
+				"damage": 2.0,
+				"fire_rate": 900,
+				"range": 3.5,
+				"bullet_speed": 600,
+				"damage_duration": null,
+				"splash_range": null,
+				"splash_damage": null,
+				"slowdown": null,
+				"slowdown_duration": null,
+				"chain_leaps": null,
+				"chain_damage": null,
+				"bonus_against": "chicken",
+				"bonus_multiplier": 3
+			},
+			"sprites": {
+				"tower": "antiChickenTower.png",
+				"shot": "bullet_1.png",
+				"hit": null
+			},
+			"sounds": {
+				"shot": "shot_1.png"
+			}
+		}
+	]
+}
