@@ -118,7 +118,7 @@ class Tower {
 
         // 🎯 bonus spécifique
         if (enemy.type === 'chicken') {
-            damage *= 2; // AntiChicken = x2 dégâts
+            damage *= 2; // antiChicken = x2 dégâts
         }
 
         enemy.health -= damage;

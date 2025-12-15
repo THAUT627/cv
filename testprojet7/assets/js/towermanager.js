@@ -8,7 +8,7 @@ class TowerManager {
 				key: 'Cannon'
 			},
 			{
-				key: 'AntiChicken'
+				key: 'antiChicken'
 			}
 		];
 
