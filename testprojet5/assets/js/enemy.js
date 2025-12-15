@@ -48,9 +48,9 @@ class Enemy {
             this.animationManager.add('walkDown', [12, 13, 14, 15], 8, true);
         } else {
             this.animationManager.add('walkLeft', [0, 1, 2, 3], 8, true);
-            this.animationManager.add('walkRight', [4, 5, 6, 7], 8, true);
-            this.animationManager.add('walkUp', [8, 9, 10, 11], 8, true);
-            this.animationManager.add('walkDown', [12, 13, 14, 15], 8, true);
+            this.animationManager.add('walkRight', [0, 1, 2, 3], 8, true);
+            this.animationManager.add('walkUp', [0, 1, 2, 3], 8, true);
+            this.animationManager.add('walkDown', [0, 1, 2, 3], 8, true);
         }
 
         this.sprite.health = this.maxhealth;
