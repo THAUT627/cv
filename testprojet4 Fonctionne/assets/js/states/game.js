@@ -5,11 +5,15 @@ tinydefence.rungame = {
     pauseButton: null,
     soundOnBtn: null,
     soundOffBtn: null,
+    pauseStartTime: 0,
+
+
 
     preload: function () {
     },
 
     create: function () {
+        this.soundEnabled = true;
         // Set cavans background
         this.game.stage.backgroundColor = "#1e1a17";
         // this.music = this.game.add.audio("background_music", 0.5, true); // volume, loop
@@ -309,19 +313,33 @@ tinydefence.rungame = {
         }
     },
     togglePause: function (pause) {
-        this.game.paused = pause;
-        this.pauseGroup.visible = pause;
-        this.pauseButton.inputEnabled = !pause;
 
         if (pause) {
+            this.pauseStartTime = this.game.time.now;
+            this.game.paused = true;
+            this.pauseGroup.visible = true;
+            this.pauseButton.inputEnabled = false;
             this.music.pause();
         } else {
-            this.music.resume();
+            let pausedDuration = this.game.time.now - this.pauseStartTime;
+
+            // ⏱️ On décale les timers
+            this.wavestart += pausedDuration;
+            this.nextEnemy += pausedDuration;
+
+            this.game.paused = false;
+            this.pauseGroup.visible = false;
+            this.pauseButton.inputEnabled = true;
+
+            if (!this.music.mute) {
+                this.music.resume();
+            }
         }
     },
 
 
     toggleSound: function (enable) {
+        this.soundEnabled = enable;
         this.music.mute = !enable;
 
         this.soundOnBtn.visible = enable;

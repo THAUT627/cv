@@ -14,6 +14,8 @@ tinydefence.rungame = {
 
     create: function () {
         this.soundEnabled = true;
+        this.game.input.enabled = true;
+        this.game.input.enabledDuringPause = true;
         // Set cavans background
         this.game.stage.backgroundColor = "#1e1a17";
         // this.music = this.game.add.audio("background_music", 0.5, true); // volume, loop
@@ -42,12 +44,6 @@ tinydefence.rungame = {
             10,
             'pauseBtn'
         );
-        // ou encore plus sûr :
-        this.pauseButton = this.game.add.sprite(
-            this.game.world.width - 40,
-            10,
-            'pauseBtn'
-        );
 
         console.log('pauseButton =', this.pauseButton);
 
@@ -61,7 +57,7 @@ tinydefence.rungame = {
         this.pauseButton.input.useHandCursor = true;
         this.pauseButton.fixedToCamera = true;
 
-        this.pauseButton.events.onInputDown.add(() => {
+        this.pauseButton.events.onInputUp.add(() => {
             this.togglePause(true);
         });
 
@@ -78,7 +74,10 @@ tinydefence.rungame = {
         );
         panel.anchor.set(0.5);
         panel.fixedToCamera = true;
+        this.pauseButton.inputEnabledDuringPause = true;
         this.pauseGroup.add(panel);
+
+        this.game.world.bringToTop(this.pauseGroup);
 
 
         let resumeBtn = this.game.add.sprite(
@@ -90,10 +89,13 @@ tinydefence.rungame = {
         resumeBtn.anchor.set(0.5);
         resumeBtn.inputEnabled = true;
         resumeBtn.fixedToCamera = true;
+        resumeBtn.input.useHandCursor = true;
+        resumeBtn.inputEnabledDuringPause = true;
 
 
 
-        resumeBtn.events.onInputDown.add(() => {
+
+        resumeBtn.events.onInputUp.add(() => {
             this.togglePause(false);
         });
 
@@ -108,9 +110,12 @@ tinydefence.rungame = {
         restartBtn.anchor.set(0.5);
         restartBtn.inputEnabled = true;
         restartBtn.fixedToCamera = true;
+        restartBtn.input.useHandCursor = true;
+        restartBtn.inputEnabledDuringPause = true;
 
 
-        restartBtn.events.onInputDown.add(() => {
+
+        restartBtn.events.onInputUp.add(() => {
             this.game.paused = false;
             this.game.state.restart();
         });
@@ -136,13 +141,16 @@ tinydefence.rungame = {
         this.soundOffBtn.inputEnabled = true;
         this.soundOnBtn.fixedToCamera = true;
         this.soundOffBtn.fixedToCamera = true;
+        this.soundOnBtn.inputEnabledDuringPause = true;
+        this.soundOffBtn.inputEnabledDuringPause = true;
 
 
-        this.soundOnBtn.events.onInputDown.add(() => {
+
+        this.soundOnBtn.events.onInputUp.add(() => {
             this.toggleSound(false);
         });
 
-        this.soundOffBtn.events.onInputDown.add(() => {
+        this.soundOffBtn.events.onInputUp.add(() => {
             this.toggleSound(true);
         });
 
