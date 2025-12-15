@@ -10,6 +10,11 @@ class Enemy {
 
         this.waypoints = waypoints;
         this.waypointIndex = 0;
+        if (this.waypoints.length < 2) {
+            console.error('Enemy needs at least 2 waypoints');
+            return;
+        }
+
         this.nextWaypoint = this.waypoints[this.waypointIndex + 1];
 
         this.dirX = this.nextWaypoint[0] - this.waypoints[0][0];
@@ -17,22 +22,6 @@ class Enemy {
 
         this.game = game;
         this.type = type;
-        if (type === 'crab') {
-            this.maxhealth = 20;
-            this.speed = 6;
-            this.points = 2;
-        }
-        else if (type === 'chicken') {
-            this.maxhealth = 5;
-            this.speed = 14;
-            this.points = 0.5;
-        }
-        else {
-            this.maxhealth = 10;
-            this.speed = 10;
-            this.points = 1;
-        }
-
 
         this.sprite = game.add.sprite(-100, -100, type);
 
@@ -54,9 +43,9 @@ class Enemy {
             this.animationManager.add('walkDown', [8, 9, 10, 11], 8, true);
         } else if (type === 'chicken') {
             this.animationManager.add('walkLeft', [0, 1, 2, 3], 8, true);
-            this.animationManager.add('walkRight', [0, 1, 2, 3], 8, true);
-            this.animationManager.add('walkUp', [0, 1, 2, 3], 8, true);
-            this.animationManager.add('walkDown', [0, 1, 2, 3], 8, true);
+            this.animationManager.add('walkRight', [4, 5, 6, 7], 8, true);
+            this.animationManager.add('walkUp', [8, 9, 10, 11], 8, true);
+            this.animationManager.add('walkDown', [12, 13, 14, 15], 8, true);
         } else {
             this.animationManager.add('walkLeft', [0, 1, 2, 3], 8, true);
             this.animationManager.add('walkRight', [4, 5, 6, 7], 8, true);
@@ -70,6 +59,7 @@ class Enemy {
         this.velocityOld = {}
 
         this.playAnimation(this.sprite.body.x, this.sprite.body.y);
+
     }
 
     update() {
@@ -177,6 +167,10 @@ class Enemy {
     }
 
     playAnimation(x, y) {
+        if (!this.animationManager || this.animationManager.frameTotal === 0) {
+            return;
+        }
+
         this.dirX = this.nextWaypoint[0] - x;
         this.dirY = this.nextWaypoint[1] - y;
 
