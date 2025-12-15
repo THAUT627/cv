@@ -121,7 +121,7 @@ class Enemy {
 
             this.waypointIndex += 1;
             // last waypoint reached?
-            if (this.waypointIndex >= this.waypoints.length) {
+            if (this.waypointIndex >= this.waypoints.length - 1) {
                 this.die();
                 this.targetReached = true;
                 if (typeof this.onTargetReachedCallback === 'function') {
