@@ -11,27 +11,45 @@ class TowerManager {
 				key: 'antiChicken'
 			}
 		];
-
-		this.towerTypes.forEach(tower => {
-			this.game.load.json(tower.key + '_properties', 'testprojet7/assets/towers/' + tower.key + '/properties.json');
-		});
 	}
 
 	load() {
 		this.towerTypes.forEach(tower => {
-			console.log('Loaded tower:', tower.key);
-			let towerProperties = this.game.cache.getJSON(tower.key + '_properties');
-			tower.color = towerProperties.color;
-			tower.tiers = towerProperties.tiers;
+			this.game.load.json(
+				tower.key + '_properties',
+				'testprojet7/assets/towers/' + tower.key + '/properties.json'
+			);
+		});
+	}
 
-			towerProperties.tiers.forEach((tier, i) => {
-				// TODO tier specific spritesheets
-				let path = 'testprojet7/assets/towers/' + tower.key + '/';
-				tier.spritesheet_tower = tower.key + '_' + i + '_spritesheet_tower';
-				tier.spritesheet_shot = tower.key + '_' + i + '_spritesheet_shot';
+	init() {
+		this.towerTypes.forEach(tower => {
+			const props = this.game.cache.getJSON(tower.key + '_properties');
 
-				this.game.load.spritesheet(tier.spritesheet_tower, path + tier.sprites.tower, 16, 16);
-				this.game.load.image(tier.spritesheet_shot, path + tier.sprites.shot);
+			if (!props) {
+				console.error('JSON manquant pour', tower.key);
+				return;
+			}
+
+			tower.color = props.color;
+			tower.tiers = props.tiers;
+
+			props.tiers.forEach((tier, i) => {
+				const basePath = 'testprojet7/assets/towers/' + tower.key + '/';
+
+				tier.spritesheet_tower = tower.key + '_' + i + '_tower';
+				tier.spritesheet_shot = tower.key + '_' + i + '_shot';
+
+				this.game.load.spritesheet(
+					tier.spritesheet_tower,
+					basePath + tier.sprites.tower,
+					16, 16
+				);
+
+				this.game.load.image(
+					tier.spritesheet_shot,
+					basePath + tier.sprites.shot
+				);
 			});
 		});
 	}
