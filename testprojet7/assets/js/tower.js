@@ -115,18 +115,15 @@ class Tower {
     onHit(enemy, bullet) {
 
         let damage = bullet.damage;
-        let attr = bullet.tower.attr;
 
         // 🎯 bonus spécifique
-        if (
-            attr.bonus_against &&
-            enemy.type === attr.bonus_against
-        ) {
-            damage *= attr.bonus_multiplier;
+        if (enemy.type === 'chicken') {
+            damage *= 2; // AntiChicken = x2 dégâts
         }
 
         enemy.health -= damage;
         bullet.kill();
+
     }
 
     isInRange(x, y, width) {
@@ -167,11 +164,11 @@ class Tower {
     }
 
     upgrade() {
-    if (this.tier >= this.maxTier) return;
-    this.tier++;
-    this.init();
-    this.build();
-}
+        if (this.tier >= this.maxTier) return;
+        this.tier++;
+        this.init();
+        this.build();
+    }
 
     getPrice(tier) {
         return this.type.tiers[tier].attributes.price;

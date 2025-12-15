@@ -2,14 +2,33 @@
 class Enemy {
 
     constructor(game, waypoints, type) {
+        this.game = game;
+        this.type = type;
 
-        this.maxhealth = 10.0;
-        this.points = 0.5;
-        this.speed = 10;
+        switch (type) {
+            case 'chicken':
+                this.maxhealth = 6;
+                this.speed = 14;
+                this.points = 0.3;
+                break;
+
+            case 'crab':
+                this.maxhealth = 18;
+                this.speed = 8;
+                this.points = 0.7;
+                break;
+
+            default:
+                this.maxhealth = 10;
+                this.speed = 10;
+                this.points = 0.5;
+        }
+
         this.targetReached = false;
 
         this.waypoints = waypoints;
         this.waypointIndex = 0;
+
         if (this.waypoints.length < 2) {
             console.error('Enemy needs at least 2 waypoints');
             return;
@@ -20,13 +39,10 @@ class Enemy {
         this.dirX = this.nextWaypoint[0] - this.waypoints[0][0];
         this.dirY = this.nextWaypoint[1] - this.waypoints[0][1];
 
-        this.game = game;
-        this.type = type;
-
         this.sprite = game.add.sprite(-100, -100, type);
 
-        this.sprite.x = this.waypoints[0][0] + (-1 * this.dirX);
-        this.sprite.y = this.waypoints[0][1] + this.sprite.height / 2 + ((-1 * this.dirY));
+        this.sprite.x = this.waypoints[0][0] - this.dirX;
+        this.sprite.y = this.waypoints[0][1] - this.dirY + this.sprite.height / 2;
 
         this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
         this.sprite.anchor.x = 0.5;

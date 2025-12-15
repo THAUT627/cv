@@ -14,12 +14,10 @@
 				"slowdown": null,
 				"slowdown_duration": null,
 				"chain_leaps": null,
-				"chain_damage": null,
-				"bonus_against": "chicken",
-				"bonus_multiplier": 3
+				"chain_damage": null
 			},
 			"sprites": {
-				"tower": "antiChickenTower.png",
+				"tower": "tower_1.png",
 				"shot": "bullet_1.png",
 				"hit": null
 			},
