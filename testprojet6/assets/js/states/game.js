@@ -57,8 +57,13 @@ tinydefence.rungame = {
         this.pauseButton.input.useHandCursor = true;
         this.pauseButton.fixedToCamera = true;
 
-        this.pauseButton.events.onInputUp.add(() => {
+        this.pauseButton.events.onInputDown.add(() => {
+            this.game.input.enabled = false;
             this.togglePause(true);
+
+            this.game.time.events.add(0, () => {
+                this.game.input.enabled = true;
+            });
         });
 
         // ---- PAUSE MENU GROUP ----
@@ -95,8 +100,13 @@ tinydefence.rungame = {
 
 
 
-        resumeBtn.events.onInputUp.add(() => {
+        resumeBtn.events.onInputDown.add(() => {
+            this.game.input.enabled = false;
             this.togglePause(false);
+
+            this.game.time.events.add(0, () => {
+                this.game.input.enabled = true;
+            });
         });
 
         this.pauseGroup.add(resumeBtn);
@@ -115,9 +125,14 @@ tinydefence.rungame = {
 
 
 
-        restartBtn.events.onInputUp.add(() => {
+        restartBtn.events.onInputDown.add(() => {
+            this.game.input.enabled = false;
             this.game.paused = false;
             this.game.state.restart();
+
+            this.game.time.events.add(0, () => {
+                this.game.input.enabled = true;
+            });
         });
 
         this.pauseGroup.add(restartBtn);
@@ -146,12 +161,22 @@ tinydefence.rungame = {
 
 
 
-        this.soundOnBtn.events.onInputUp.add(() => {
+        this.soundOnBtn.events.onInputDown.add(() => {
+            this.game.input.enabled = false;
             this.toggleSound(false);
+
+            this.game.time.events.add(0, () => {
+                this.game.input.enabled = true;
+            });
         });
 
-        this.soundOffBtn.events.onInputUp.add(() => {
+        this.soundOffBtn.events.onInputDown.add(() => {
+            this.game.input.enabled = false;
             this.toggleSound(true);
+
+            this.game.time.events.add(0, () => {
+                this.game.input.enabled = true;
+            });
         });
 
         this.pauseGroup.add(this.soundOnBtn);
@@ -323,6 +348,7 @@ tinydefence.rungame = {
     togglePause: function (pause) {
 
         if (pause) {
+            this.game.input.onDown.removeAll();
             this.pauseStartTime = this.game.time.now;
             this.game.paused = true;
             this.game.time.events.pause();
@@ -334,6 +360,7 @@ tinydefence.rungame = {
             }
         } else {
             let pausedDuration = this.game.time.now - this.pauseStartTime;
+            this.game.input.reset();
 
             // ⏱️ On décale les timers
             this.wavestart += pausedDuration;
