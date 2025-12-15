@@ -325,21 +325,25 @@ tinydefence.rungame = {
         if (pause) {
             this.pauseStartTime = this.game.time.now;
             this.game.paused = true;
+            this.game.time.events.pause();
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
-            this.music.pause();
+
+            if (this.soundEnabled) {
+                this.music.pause();
+            }
         } else {
             let pausedDuration = this.game.time.now - this.pauseStartTime;
 
             // ⏱️ On décale les timers
             this.wavestart += pausedDuration;
             this.nextEnemy += pausedDuration;
-
             this.game.paused = false;
+            this.game.time.events.resume();
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
 
-            if (!this.music.mute) {
+            if (this.soundEnabled) {
                 this.music.resume();
             }
         }
@@ -348,7 +352,10 @@ tinydefence.rungame = {
 
     toggleSound: function (enable) {
         this.soundEnabled = enable;
-        this.music.mute = !enable;
+
+        if (this.music) {
+            this.music.mute = !enable;
+        }
 
         this.soundOnBtn.visible = enable;
         this.soundOffBtn.visible = !enable;
