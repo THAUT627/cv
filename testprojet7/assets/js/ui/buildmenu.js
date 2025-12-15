@@ -131,10 +131,16 @@ class Buildmenu {
 
             let button = tinydefence.game.add.button(0, 0, key, () => {
                 let params = this.menu.params;
-                this.buildTowerCallback(towerType.key, params.x, params.y);
-            }, this, 0, 0, 0);
 
-            button.scale.setTo(tinydefence.scalefactor, tinydefence.scalefactor);
+                // ✅ le type vient UNIQUEMENT du bouton
+                this.buildTowerCallback(
+                    towerType.key,
+                    params.x,
+                    params.y
+                );
+            });
+
+            button.scale.setTo(tinydefence.scalefactor);
             button.visible = false;
 
             button.onInputOver.add(() => {
