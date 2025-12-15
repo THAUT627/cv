@@ -34,17 +34,14 @@ tinydefence.rungame = {
 
         // ---- PAUSE BUTTON ----
         this.pauseButton = this.game.add.sprite(
-            this.game.width - 30,
+            this.game.width - 40,
             10,
-            'pauseBtn' // ou un bouton pause dédié si tu en as un
+            'pauseBtn'
         );
 
-        this.pauseBtn.inputEnabled = true;
-        this.pauseBtn.input.useHandCursor = true;
-        this.pauseBtn.fixedToCamera = true;
-
-        this.game.world.bringToTop(this.pauseBtn);
-
+        this.pauseButton.inputEnabled = true;
+        this.pauseButton.input.useHandCursor = true;
+        this.pauseButton.fixedToCamera = true;
 
         this.pauseButton.events.onInputDown.add(() => {
             this.togglePause(true);
