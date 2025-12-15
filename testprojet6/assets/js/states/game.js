@@ -57,13 +57,8 @@ tinydefence.rungame = {
         this.pauseButton.input.useHandCursor = true;
         this.pauseButton.fixedToCamera = true;
 
-        this.pauseButton.events.onInputDown.add(() => {
-            this.game.input.enabled = false;
+        this.pauseButton.events.onInputUp.add(() => {
             this.togglePause(true);
-
-            this.game.time.events.add(0, () => {
-                this.game.input.enabled = true;
-            });
         });
 
         // ---- PAUSE MENU GROUP ----
@@ -100,13 +95,8 @@ tinydefence.rungame = {
 
 
 
-        resumeBtn.events.onInputDown.add(() => {
-            this.game.input.enabled = false;
+        resumeBtn.events.onInputUp.add(() => {
             this.togglePause(false);
-
-            this.game.time.events.add(0, () => {
-                this.game.input.enabled = true;
-            });
         });
 
         this.pauseGroup.add(resumeBtn);
@@ -125,14 +115,9 @@ tinydefence.rungame = {
 
 
 
-        restartBtn.events.onInputDown.add(() => {
-            this.game.input.enabled = false;
+        restartBtn.events.onInputUp.add(() => {
             this.game.paused = false;
             this.game.state.restart();
-
-            this.game.time.events.add(0, () => {
-                this.game.input.enabled = true;
-            });
         });
 
         this.pauseGroup.add(restartBtn);
@@ -161,22 +146,12 @@ tinydefence.rungame = {
 
 
 
-        this.soundOnBtn.events.onInputDown.add(() => {
-            this.game.input.enabled = false;
+        this.soundOnBtn.events.onInputUp.add(() => {
             this.toggleSound(false);
-
-            this.game.time.events.add(0, () => {
-                this.game.input.enabled = true;
-            });
         });
 
-        this.soundOffBtn.events.onInputDown.add(() => {
-            this.game.input.enabled = false;
+        this.soundOffBtn.events.onInputUp.add(() => {
             this.toggleSound(true);
-
-            this.game.time.events.add(0, () => {
-                this.game.input.enabled = true;
-            });
         });
 
         this.pauseGroup.add(this.soundOnBtn);
@@ -348,29 +323,23 @@ tinydefence.rungame = {
     togglePause: function (pause) {
 
         if (pause) {
-            this.game.input.onDown.removeAll();
             this.pauseStartTime = this.game.time.now;
             this.game.paused = true;
-            this.game.time.events.pause();
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
-
-            if (this.soundEnabled) {
-                this.music.pause();
-            }
+            this.music.pause();
         } else {
             let pausedDuration = this.game.time.now - this.pauseStartTime;
-            this.game.input.reset();
 
             // ⏱️ On décale les timers
             this.wavestart += pausedDuration;
             this.nextEnemy += pausedDuration;
+
             this.game.paused = false;
-            this.game.time.events.resume();
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
 
-            if (this.soundEnabled) {
+            if (!this.music.mute) {
                 this.music.resume();
             }
         }
@@ -379,10 +348,7 @@ tinydefence.rungame = {
 
     toggleSound: function (enable) {
         this.soundEnabled = enable;
-
-        if (this.music) {
-            this.music.mute = !enable;
-        }
+        this.music.mute = !enable;
 
         this.soundOnBtn.visible = enable;
         this.soundOffBtn.visible = !enable;
