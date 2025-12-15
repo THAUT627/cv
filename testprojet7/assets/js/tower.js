@@ -123,7 +123,6 @@ class Tower {
 
         enemy.health -= damage;
         bullet.kill();
-
     }
 
     isInRange(x, y, width) {
