@@ -5,7 +5,7 @@ class TowerManager {
 
 		this.towerTypes = [
 			{
-				key: 'cannon'
+				key: 'Cannon'
 			},
 			{
 				key: 'antiChicken'
