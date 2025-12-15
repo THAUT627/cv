@@ -7,9 +7,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'level1',
         // Path to map data
-        data: 'testprojet4/assets/maps/Level1/map.json',
+        data: 'testprojet5/assets/maps/Level1/map.json',
         // Path to map sprite
-        sprite: 'testprojet4/assets/maps/Level1/map.png',
+        sprite: 'testprojet5/assets/maps/Level1/map.png',
         // Readable name for this map/level
         name: 'Level 1',
         // Start point for the enemies
@@ -32,9 +32,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'BeachDefense',
         // Path to map data
-        data: 'testprojet4/assets/maps/BeachDefense/map.json',
+        data: 'testprojet5/assets/maps/BeachDefense/map.json',
         // Path to map sprite
-        sprite: 'testprojet4/assets/maps/BeachDefense/map.png',
+        sprite: 'testprojet5/assets/maps/BeachDefense/map.png',
         // Readable name for this map/level
         name: 'Beach Defense',
         // Start point for the enemies
@@ -56,9 +56,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'LavaDefense',
         // Path to map data
-        data: 'testprojet4/assets/maps/LavaDefense/map.json',
+        data: 'testprojet5/assets/maps/LavaDefense/map.json',
         // Path to map sprite
-        sprite: 'testprojet4/assets/maps/LavaDefense/map.png',
+        sprite: 'testprojet5/assets/maps/LavaDefense/map.png',
         // Readable name for this map/level
         name: 'Lava Defense',
         // Start point for the enemies
@@ -81,9 +81,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'LavaDefense2',
         // Path to map data
-        data: 'testprojet4/assets/maps/LavaDefense2/map1.json',
+        data: 'testprojet5/assets/maps/LavaDefense2/map1.json',
         // Path to map sprite
-        sprite: 'testprojet4/assets/maps/LavaDefense2/map1.png',
+        sprite: 'testprojet5/assets/maps/LavaDefense2/map1.png',
         // Readable name for this map/level
         name: 'Lava Defense 2',
         // Start point for the enemies
@@ -105,9 +105,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'LavaDefense3',
         // Path to map data
-        data: 'testprojet4/assets/maps/LavaDefense3/map2.json',
+        data: 'testprojet5/assets/maps/LavaDefense3/map2.json',
         // Path to map sprite
-        sprite: 'testprojet4/assets/maps/LavaDefense3/map2.png',
+        sprite: 'testprojet5/assets/maps/LavaDefense3/map2.png',
         // Readable name for this map/level
         name: 'Lava Defense 3',
         // Start point for the enemies
@@ -129,9 +129,9 @@ tinydefence.maps = [
         // Key for this map
         key: 'LavaDefense4',
         // Path to map data
-        data: 'testprojet4/assets/maps/LavaDefense4/map3.json',
+        data: 'testprojet5/assets/maps/LavaDefense4/map3.json',
         // Path to map sprite
-        sprite: 'testprojet4/assets/maps/LavaDefense4/map3.png',
+        sprite: 'testprojet5/assets/maps/LavaDefense4/map3.png',
         // Readable name for this map/level
         name: 'Lava Defense 4',
         // Start point for the enemies
