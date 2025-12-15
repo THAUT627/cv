@@ -15,9 +15,25 @@ class TowerManager {
 
 	load() {
 		this.towerTypes.forEach(tower => {
+			const basePath = 'testprojet7/assets/towers/' + tower.key + '/';
+
+			// load JSON
 			this.game.load.json(
 				tower.key + '_properties',
-				'testprojet7/assets/towers/' + tower.key + '/properties.json'
+				basePath + 'properties.json'
+			);
+
+			// ⚠️ on précharge aussi les sprites ici
+			// (on sait qu'il n'y a qu'un tier pour l’instant)
+			this.game.load.spritesheet(
+				tower.key + '_0_tower',
+				basePath + 'tower_1.png',
+				16, 16
+			);
+
+			this.game.load.image(
+				tower.key + '_0_shot',
+				basePath + 'bullet_1.png'
 			);
 		});
 	}
@@ -35,21 +51,8 @@ class TowerManager {
 			tower.tiers = props.tiers;
 
 			props.tiers.forEach((tier, i) => {
-				const basePath = 'testprojet7/assets/towers/' + tower.key + '/';
-
 				tier.spritesheet_tower = tower.key + '_' + i + '_tower';
 				tier.spritesheet_shot = tower.key + '_' + i + '_shot';
-
-				this.game.load.spritesheet(
-					tier.spritesheet_tower,
-					basePath + tier.sprites.tower,
-					16, 16
-				);
-
-				this.game.load.image(
-					tier.spritesheet_shot,
-					basePath + tier.sprites.shot
-				);
 			});
 		});
 	}
