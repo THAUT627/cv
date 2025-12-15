@@ -9,6 +9,7 @@ tinydefence.preload.prototype = {
 		this.game.load.spritesheet('selection', 'testprojet5/assets/images/selection.png', 16, 16);
 		this.game.load.spritesheet('enemy', 'testprojet5/assets/images/enemy.png', 16, 16);
 		this.game.load.spritesheet('crab', 'testprojet5/assets/images/enemyCrab.png', 16, 16);
+		this.game.load.spritesheet('chicken', 'testprojet5/assets/images/enemyChicken.png', 16, 16);
 
 		this.game.load.image('buildmenu', 'testprojet5/assets/images/ui/menuElements.png');
 		this.game.load.spritesheet('buildmenuButtons', 'testprojet5/assets/images/ui/menuButtons.png', 16, 16);
