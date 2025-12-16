@@ -321,6 +321,7 @@ tinydefence.rungame = {
         }
     },
     togglePause: function (pause) {
+        console.log('togglePause called, pause=', pause, 'game.paused=', !!this.game.paused);
 
         if (pause) {
             // store a real timestamp so we can compute paused duration even when Phaser time is frozen
