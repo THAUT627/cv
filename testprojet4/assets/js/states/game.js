@@ -84,7 +84,7 @@ tinydefence.rungame = {
 
         let resumeBtn = this.game.add.sprite(
             panel.x,
-            panel.y - 50,
+            panel.y - 70,
             'resumeBtn'
         );
 
@@ -112,7 +112,7 @@ tinydefence.rungame = {
 
         let restartBtn = this.game.add.sprite(
             panel.x,
-            panel.y + 50,
+            panel.y + 70,
             'restartBtn'
         );
 
@@ -147,21 +147,21 @@ tinydefence.rungame = {
         this.pauseGroup.add(restartBtn);
 
         this.soundOnBtn = this.game.add.sprite(
-            panel.x - 50,
-            panel.y + 70,
+            panel.x - 60,
+            panel.y + 120,
             'soundOnBtn'
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x + 50,
-            panel.y + 70,
+            panel.x + 60,
+            panel.y + 120,
             'soundOffBtn'
         );
 
         this.soundOnBtn.anchor.set(0.5);
         this.soundOffBtn.anchor.set(0.5);
-        this.soundOnBtn.scale.set(0.6);
-        this.soundOffBtn.scale.set(0.6);
+        this.soundOnBtn.scale.set(0.55);
+        this.soundOffBtn.scale.set(0.55);
 
         this.soundOnBtn.inputEnabled = true;
         this.soundOffBtn.inputEnabled = true;
