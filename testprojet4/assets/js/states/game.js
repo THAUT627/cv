@@ -122,6 +122,7 @@ tinydefence.rungame = {
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
+        restartBtn.input.priorityID = 10;
         console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 50) + ', scale=0.7');
 
         restartBtn.events.onInputDown.add(() => {
@@ -147,21 +148,23 @@ tinydefence.rungame = {
         this.pauseGroup.add(restartBtn);
 
         this.soundOnBtn = this.game.add.sprite(
-            panel.x - 60,
-            panel.y + 120,
+            panel.x - 80,
+            panel.y + 200,
             'soundOnBtn'
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x + 60,
-            panel.y + 120,
+            panel.x + 80,
+            panel.y + 200,
             'soundOffBtn'
         );
 
         this.soundOnBtn.anchor.set(0.5);
         this.soundOffBtn.anchor.set(0.5);
-        this.soundOnBtn.scale.set(0.55);
-        this.soundOffBtn.scale.set(0.55);
+        this.soundOnBtn.scale.set(0.5);
+        this.soundOffBtn.scale.set(0.5);
+        this.soundOnBtn.input.priorityID = 1;
+        this.soundOffBtn.input.priorityID = 1;
 
         this.soundOnBtn.inputEnabled = true;
         this.soundOffBtn.inputEnabled = true;
