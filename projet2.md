@@ -8,4 +8,4 @@ Dans cette version, j'ai ajouté plusieurs nouvelles cartes au jeu.
 Mais je n'ai pas réussi à implémenter ce système de génération aléatoire, j'ai opté pour une alternative :
 
 * Ajout de plusieurs niveaux distincts
-* Chaque niveau est sélectionné de manière classique selon l'envie du joueur.
+* Chaque niveau est sélectionné selon l'envie du joueur.

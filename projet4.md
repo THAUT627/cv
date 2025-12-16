@@ -2,10 +2,10 @@
 
 ---
 
-Dans cette version, un nouvel ennemi a été ajouté au jeu, apportant plus de variété dans les vagues d’ennemis.
+Dans cette version, un nouvel ennemi a été ajouté au jeu.
 
-En parallèle, des tentatives de correction ont été faites sur :
+J'ai fait des corrections sur le jeu :
 
 * Les bugs du menu pause
-* Le comportement des boutons Resume reprend le jeu, restart recommence le jeu mais le son de la musique de fond est eteint automatiquement, il faut le ralumé manuellement dans le menu pause.
+* Le comportement des boutons "Resume" reprend le jeu, "restart" recommence le jeu et le son de la musique de fond est éteint automatiquement, il faut le rallumé manuellement dans le menu pause.
 * L'agencement des différents boutons sont très étrange, j'avais un problème avec le clique de la souris qui se superposait sur 2 boutons.
