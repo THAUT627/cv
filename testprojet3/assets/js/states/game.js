@@ -6,6 +6,7 @@ tinydefence.rungame = {
     soundOnBtn: null,
     soundOffBtn: null,
     pauseStartTime: 0,
+    lastPauseClickTime: 0,
 
 
 
@@ -59,6 +60,7 @@ tinydefence.rungame = {
 
         this.pauseButton.events.onInputUp.add(() => {
             this.togglePause(true);
+            this.lastPauseClickTime = Date.now();
         });
 
         // ---- PAUSE MENU GROUP ----
@@ -96,6 +98,8 @@ tinydefence.rungame = {
 
 
         resumeBtn.events.onInputUp.add(() => {
+            console.log('resumeBtn clicked');
+            this.lastPauseClickTime = Date.now();
             this.togglePause(false);
         });
 
@@ -116,6 +120,12 @@ tinydefence.rungame = {
 
 
         restartBtn.events.onInputUp.add(() => {
+            const now = Date.now();
+            // ignore near-duplicate clicks that likely come from the same pointer event
+            if (now - (this.lastPauseClickTime || 0) < 300) {
+                console.log('Ignored restart: duplicate click after resume/pause');
+                return;
+            }
             this.game.paused = false;
             this.game.state.restart();
         });
