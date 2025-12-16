@@ -6,6 +6,8 @@ tinydefence.rungame = {
     soundOnBtn: null,
     soundOffBtn: null,
     pauseStartTime: 0,
+    lastPauseClickTime: 0,
+    pauseInputDelay: 200,
 
 
 
@@ -96,6 +98,8 @@ tinydefence.rungame = {
 
 
         resumeBtn.events.onInputUp.add(() => {
+            // mark resume click time to avoid duplicate restart clicks
+            this.lastPauseClickTime = Date.now();
             this.togglePause(false);
         });
 
@@ -116,6 +120,12 @@ tinydefence.rungame = {
 
 
         restartBtn.events.onInputUp.add(() => {
+            const now = Date.now();
+            if (now - (this.lastPauseClickTime || 0) < 300) {
+                // likely the same pointer event that resumed/paused — ignore
+                return;
+            }
+            try { if (this.music && this.music.isPlaying) { this.music.stop(); } } catch (e) {}
             this.game.paused = false;
             this.game.state.restart();
         });
@@ -321,27 +331,39 @@ tinydefence.rungame = {
         }
     },
     togglePause: function (pause) {
-
         if (pause) {
-            this.pauseStartTime = this.game.time.now;
+            // use real time so we can compute duration even if Phaser time is frozen
+            this.pauseStartTime = Date.now();
             this.game.paused = true;
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
-            this.music.pause();
+            try { if (this.music && this.music.playing) { this.music.pause(); } } catch (e) {}
+
+            // disable pause menu buttons for a short moment to avoid processing the same click
+            this.pauseGroup.forEach(function (child) {
+                try { child.inputEnabled = false; } catch (e) {}
+            }, this);
+
+            // enable inputs a bit later
+            setTimeout(() => {
+                this.lastPauseClickTime = Date.now();
+                this.pauseGroup.forEach(function (child) {
+                    try { child.inputEnabled = true; child.inputEnabledDuringPause = true; } catch (e) {}
+                }, this);
+            }, this.pauseInputDelay || 200);
+
         } else {
-            let pausedDuration = this.game.time.now - this.pauseStartTime;
+            const pausedDuration = Date.now() - (this.pauseStartTime || Date.now());
 
             // ⏱️ On décale les timers
-            this.wavestart += pausedDuration;
-            this.nextEnemy += pausedDuration;
+            if (typeof this.wavestart === 'number') { this.wavestart += pausedDuration; }
+            if (typeof this.nextEnemy === 'number') { this.nextEnemy += pausedDuration; }
 
             this.game.paused = false;
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
 
-            if (!this.music.mute) {
-                this.music.resume();
-            }
+            try { if (this.music && !this.music.mute) { this.music.resume(); } } catch (e) {}
         }
     },
 
