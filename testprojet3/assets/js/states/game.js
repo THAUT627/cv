@@ -7,6 +7,8 @@ tinydefence.rungame = {
     soundOffBtn: null,
     pauseStartTime: 0,
 
+    isPaused: false,
+
 
 
     preload: function () {
@@ -116,7 +118,7 @@ tinydefence.rungame = {
 
 
         restartBtn.events.onInputUp.add(() => {
-            this.game.paused = false;
+            this.isPaused = false;
             this.game.state.restart();
         });
 
@@ -165,7 +167,7 @@ tinydefence.rungame = {
         this.nextWaveOrLevel();
 
         this.game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(() => {
-            this.togglePause(!this.game.paused);
+            this.togglePause(!this.isPaused);
         });
 
         if (!this.game.backgroundMusic) {
@@ -324,10 +326,12 @@ tinydefence.rungame = {
 
         if (pause) {
             this.pauseStartTime = this.game.time.now;
-            this.game.paused = true;
+            this.isPaused = true;
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
-            this.music.pause();
+            if (this.music && this.music.isPlaying) {
+                try { this.music.pause(); } catch (e) { /* ignore */ }
+            }
         } else {
             let pausedDuration = this.game.time.now - this.pauseStartTime;
 
@@ -335,12 +339,12 @@ tinydefence.rungame = {
             this.wavestart += pausedDuration;
             this.nextEnemy += pausedDuration;
 
-            this.game.paused = false;
+            this.isPaused = false;
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
 
-            if (!this.music.mute) {
-                this.music.resume();
+            if (this.music && !this.music.mute) {
+                try { this.music.resume(); } catch (e) { /* ignore */ }
             }
         }
     },
