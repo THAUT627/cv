@@ -15,7 +15,7 @@ tinydefence.rungame = {
     },
 
     create: function () {
-        this.soundEnabled = true;
+        this.soundEnabled = (tinydefence.savedSound ? tinydefence.savedSound.enabled : true);
         this.game.input.enabled = true;
         this.game.input.enabledDuringPause = true;
         // Set cavans background
@@ -129,6 +129,14 @@ tinydefence.rungame = {
         });
 
         restartBtn.events.onInputUp.add(() => {
+            // Preserve sound state across restart
+            try {
+                tinydefence.savedSound = {
+                    enabled: this.soundEnabled,
+                    mute: (this.music ? !!this.music.mute : false)
+                };
+            } catch (e) {}
+
             // Restart the game cleanly: hide pause UI and restart state.
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
@@ -176,7 +184,8 @@ tinydefence.rungame = {
         this.pauseGroup.add(this.soundOffBtn);
 
         // état initial
-        this.soundOffBtn.visible = false;
+        this.soundOnBtn.visible = this.soundEnabled;
+        this.soundOffBtn.visible = !this.soundEnabled;
 
 
         this.model.currentWave = -1;
@@ -194,6 +203,10 @@ tinydefence.rungame = {
         }
 
         this.music = this.game.backgroundMusic;
+        // restore saved sound state if present
+        if (tinydefence.savedSound) {
+            try { if (this.music) { this.music.mute = !!tinydefence.savedSound.mute; } } catch (e) {}
+        }
 
 
     },
