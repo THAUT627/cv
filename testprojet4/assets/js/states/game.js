@@ -93,12 +93,15 @@ tinydefence.rungame = {
         resumeBtn.fixedToCamera = true;
         resumeBtn.input.useHandCursor = true;
         resumeBtn.inputEnabledDuringPause = true;
+        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 20));
 
-
-
+        resumeBtn.events.onInputDown.add(() => {
+            console.log('resumeBtn.onInputDown triggered');
+        });
 
         resumeBtn.events.onInputUp.add(() => {
             // mark resume click time to avoid duplicate restart clicks
+            console.log('>>> RESUME handler called <<<');
             this.lastPauseClickTime = Date.now();
             console.log('► RESUME clicked at', this.lastPauseClickTime);
             this.togglePause(false);
@@ -117,11 +120,15 @@ tinydefence.rungame = {
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
+        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 20));
 
-
+        restartBtn.events.onInputDown.add(() => {
+            console.log('restartBtn.onInputDown triggered');
+        });
 
         restartBtn.events.onInputUp.add(() => {
             const now = Date.now();
+            console.log('>>> RESTART handler called <<<');
             console.log('► RESTART clicked at', now, '(lastPause was', this.lastPauseClickTime, ', diff=', now - this.lastPauseClickTime, ')');
             if (now - (this.lastPauseClickTime || 0) < 300) {
                 // likely the same pointer event that resumed/paused — ignore
