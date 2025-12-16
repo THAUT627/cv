@@ -146,15 +146,19 @@ tinydefence.rungame = {
 
         this.pauseGroup.add(restartBtn);
 
+        // Place both sound buttons at the same coordinates so toggling doesn't move them
+        const soundBtnX = panel.x;
+        const soundBtnY = panel.y + 200;
+
         this.soundOnBtn = this.game.add.sprite(
-            panel.x - 80,
-            panel.y + 200,
+            soundBtnX,
+            soundBtnY,
             'soundOnBtn'
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x - 80,
-            panel.y + 200,
+            soundBtnX,
+            soundBtnY,
             'soundOffBtn'
         );
 
