@@ -92,12 +92,12 @@ tinydefence.maps = [
         end: { x: 29, y: 1 },
         // Waves
         waves: [
-            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'enemy' },
-            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
+            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'chicken' },
+            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'chicken' },
+            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
             // Add more waves here
         ]
     },
@@ -116,12 +116,12 @@ tinydefence.maps = [
         end: { x: 29, y: 1 },
         // Waves
         waves: [
-            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'enemy' },
-            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
+            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'chicken' },
+            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'chicken' },
+            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
             // Add more waves here
         ]
     },
@@ -140,12 +140,12 @@ tinydefence.maps = [
         end: { x: 29, y: 1 },
         // Waves
         waves: [
-            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'enemy' },
-            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
-            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'enemy' },
+            { dropInMillis: 1500, maxEnemies: 2, enemyHealth: 10, enemySpeed: 20, points: 5, type: 'chicken' },
+            { dropInMillis: 1500, maxEnemies: 4, enemyHealth: 20, enemySpeed: 40, points: 5, type: 'chicken' },
+            { dropInMillis: 2000, maxEnemies: 6, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1500, maxEnemies: 8, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1000, maxEnemies: 10, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
+            { dropInMillis: 1000, maxEnemies: 15, enemyHealth: 20, enemySpeed: 60, points: 5, type: 'chicken' },
             // Add more waves here
         ]
     },
