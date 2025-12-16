@@ -84,16 +84,17 @@ tinydefence.rungame = {
 
         let resumeBtn = this.game.add.sprite(
             panel.x,
-            panel.y - 20,
+            panel.y - 50,
             'resumeBtn'
         );
 
         resumeBtn.anchor.set(0.5);
+        resumeBtn.scale.set(0.7);
         resumeBtn.inputEnabled = true;
         resumeBtn.fixedToCamera = true;
         resumeBtn.input.useHandCursor = true;
         resumeBtn.inputEnabledDuringPause = true;
-        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 20));
+        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 50) + ', scale=0.7');
 
         resumeBtn.events.onInputDown.add(() => {
             console.log('resumeBtn.onInputDown triggered');
@@ -111,16 +112,17 @@ tinydefence.rungame = {
 
         let restartBtn = this.game.add.sprite(
             panel.x,
-            panel.y + 20,
+            panel.y + 50,
             'restartBtn'
         );
 
         restartBtn.anchor.set(0.5);
+        restartBtn.scale.set(0.7);
         restartBtn.inputEnabled = true;
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
-        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 20));
+        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 50) + ', scale=0.7');
 
         restartBtn.events.onInputDown.add(() => {
             console.log('restartBtn.onInputDown triggered');
