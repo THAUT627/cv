@@ -100,6 +100,7 @@ tinydefence.rungame = {
         resumeBtn.events.onInputUp.add(() => {
             // mark resume click time to avoid duplicate restart clicks
             this.lastPauseClickTime = Date.now();
+            console.log('► RESUME clicked at', this.lastPauseClickTime);
             this.togglePause(false);
         });
 
@@ -121,12 +122,15 @@ tinydefence.rungame = {
 
         restartBtn.events.onInputUp.add(() => {
             const now = Date.now();
+            console.log('► RESTART clicked at', now, '(lastPause was', this.lastPauseClickTime, ', diff=', now - this.lastPauseClickTime, ')');
             if (now - (this.lastPauseClickTime || 0) < 300) {
                 // likely the same pointer event that resumed/paused — ignore
+                console.log('  ✗ RESTART ignored (too close to last pause action)');
                 return;
             }
             try { if (this.music && this.music.isPlaying) { this.music.stop(); } } catch (e) {}
             this.game.paused = false;
+            console.log('  ✓ RESTART executing game.state.restart()');
             this.game.state.restart();
         });
 
@@ -333,26 +337,32 @@ tinydefence.rungame = {
     togglePause: function (pause) {
         if (pause) {
             // use real time so we can compute duration even if Phaser time is frozen
+            console.log('togglePause(true) - pausing game');
             this.pauseStartTime = Date.now();
             this.game.paused = true;
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
             try { if (this.music && this.music.playing) { this.music.pause(); } } catch (e) {}
 
-            // disable pause menu buttons for a short moment to avoid processing the same click
-            this.pauseGroup.forEach(function (child) {
-                try { child.inputEnabled = false; } catch (e) {}
-            }, this);
+            // temporarily disable pause menu buttons to prevent accidental double-clicks
+            for (let i = 0; i < this.pauseGroup.children.length; i++) {
+                try { this.pauseGroup.children[i].inputEnabled = false; } catch (e) {}
+            }
 
-            // enable inputs a bit later
+            // re-enable inputs after a short delay
             setTimeout(() => {
                 this.lastPauseClickTime = Date.now();
-                this.pauseGroup.forEach(function (child) {
-                    try { child.inputEnabled = true; child.inputEnabledDuringPause = true; } catch (e) {}
-                }, this);
+                for (let i = 0; i < this.pauseGroup.children.length; i++) {
+                    try { 
+                        this.pauseGroup.children[i].inputEnabled = true;
+                        this.pauseGroup.children[i].inputEnabledDuringPause = true;
+                    } catch (e) {}
+                }
+                console.log('  → pause menu inputs re-enabled after delay');
             }, this.pauseInputDelay || 200);
 
         } else {
+            console.log('togglePause(false) - resuming game');
             const pausedDuration = Date.now() - (this.pauseStartTime || Date.now());
 
             // ⏱️ On décale les timers
@@ -364,6 +374,7 @@ tinydefence.rungame = {
             this.pauseButton.inputEnabled = true;
 
             try { if (this.music && !this.music.mute) { this.music.resume(); } } catch (e) {}
+            console.log('  → game resumed, pausedDuration=' + pausedDuration + 'ms');
         }
     },
 
