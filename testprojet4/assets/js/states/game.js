@@ -132,7 +132,6 @@ tinydefence.rungame = {
             const now = Date.now();
             console.log('>>> RESTART handler called <<<');
             console.log('► RESTART clicked at', now);
-            try { if (this.music && this.music.isPlaying) { this.music.stop(); } } catch (e) {}
             this.game.paused = false;
             console.log('  ✓ RESTART executing game.state.restart()');
             this.game.state.restart();
