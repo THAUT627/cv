@@ -84,7 +84,7 @@ tinydefence.rungame = {
 
         let resumeBtn = this.game.add.sprite(
             panel.x,
-            panel.y - 70,
+            panel.y - 60,
             'resumeBtn'
         );
 
@@ -94,7 +94,7 @@ tinydefence.rungame = {
         resumeBtn.fixedToCamera = true;
         resumeBtn.input.useHandCursor = true;
         resumeBtn.inputEnabledDuringPause = true;
-        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 50) + ', scale=0.7');
+        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 60) + ', scale=0.7');
 
         resumeBtn.events.onInputDown.add(() => {
             console.log('resumeBtn.onInputDown triggered');
@@ -112,7 +112,7 @@ tinydefence.rungame = {
 
         let restartBtn = this.game.add.sprite(
             panel.x,
-            panel.y + 70,
+            panel.y + 20,
             'restartBtn'
         );
 
@@ -122,7 +122,7 @@ tinydefence.rungame = {
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
-        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 50) + ', scale=0.7');
+        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 20) + ', scale=0.7');
 
         restartBtn.events.onInputDown.add(() => {
             console.log('restartBtn.onInputDown triggered');
@@ -148,7 +148,7 @@ tinydefence.rungame = {
 
         // Place both sound buttons at the same coordinates so toggling doesn't move them
         const soundBtnX = panel.x;
-        const soundBtnY = panel.y + 200;
+        const soundBtnY = panel.y + 130;
 
         this.soundOnBtn = this.game.add.sprite(
             soundBtnX,
@@ -186,6 +186,21 @@ tinydefence.rungame = {
 
         this.pauseGroup.add(this.soundOnBtn);
         this.pauseGroup.add(this.soundOffBtn);
+
+        // Reduce interaction hit areas slightly so nearby buttons don't collide
+        try {
+            const shrinkFactor = 0.7; // 70% of sprite area
+
+            const rW = resumeBtn.width;
+            const rH = resumeBtn.height;
+            resumeBtn.input.hitArea = new Phaser.Rectangle(-rW * (shrinkFactor / 2), -rH * (shrinkFactor / 2), rW * shrinkFactor, rH * shrinkFactor);
+            resumeBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
+
+            const rrW = restartBtn.width;
+            const rrH = restartBtn.height;
+            restartBtn.input.hitArea = new Phaser.Rectangle(-rrW * (shrinkFactor / 2), -rrH * (shrinkFactor / 2), rrW * shrinkFactor, rrH * shrinkFactor);
+            restartBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
+        } catch (e) { }
 
         // état initial
         this.soundOnBtn.visible = this.soundEnabled;
