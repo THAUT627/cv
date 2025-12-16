@@ -6,6 +6,8 @@ tinydefence.rungame = {
     soundOnBtn: null,
     soundOffBtn: null,
     pauseStartTime: 0,
+    lastPauseClickTime: 0,
+    pauseInputDelay: 200,
 
 
 
@@ -13,11 +15,7 @@ tinydefence.rungame = {
     },
 
     create: function () {
-        tinydefence.towerManager.init();
-        tinydefence.towerManager.load(); // ⭐ LIGNE MANQUANTE ⭐
-        console.log(tinydefence.towerManager.towerTypes.map(t => t.key));
-            // Enable input
-        this.soundEnabled = true;
+        this.soundEnabled = (tinydefence.savedSound ? tinydefence.savedSound.enabled : true);
         this.game.input.enabled = true;
         this.game.input.enabledDuringPause = true;
         // Set cavans background
@@ -86,20 +84,27 @@ tinydefence.rungame = {
 
         let resumeBtn = this.game.add.sprite(
             panel.x,
-            panel.y - 20,
+            panel.y - 60,
             'resumeBtn'
         );
 
         resumeBtn.anchor.set(0.5);
+        resumeBtn.scale.set(0.7);
         resumeBtn.inputEnabled = true;
         resumeBtn.fixedToCamera = true;
         resumeBtn.input.useHandCursor = true;
         resumeBtn.inputEnabledDuringPause = true;
+        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 60) + ', scale=0.7');
 
-
-
+        resumeBtn.events.onInputDown.add(() => {
+            console.log('resumeBtn.onInputDown triggered');
+        });
 
         resumeBtn.events.onInputUp.add(() => {
+            // mark resume click time to avoid duplicate restart clicks
+            console.log('>>> RESUME handler called <<<');
+            this.lastPauseClickTime = Date.now();
+            console.log('► RESUME clicked at', this.lastPauseClickTime);
             this.togglePause(false);
         });
 
@@ -112,34 +117,55 @@ tinydefence.rungame = {
         );
 
         restartBtn.anchor.set(0.5);
+        restartBtn.scale.set(0.7);
         restartBtn.inputEnabled = true;
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
+        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 20) + ', scale=0.7');
 
-
+        restartBtn.events.onInputDown.add(() => {
+            console.log('restartBtn.onInputDown triggered');
+        });
 
         restartBtn.events.onInputUp.add(() => {
+            // Preserve sound state across restart
+            try {
+                tinydefence.savedSound = {
+                    enabled: this.soundEnabled,
+                    mute: (this.music ? !!this.music.mute : false)
+                };
+            } catch (e) { }
+
+            // Restart the game cleanly: hide pause UI and restart state.
+            this.pauseGroup.visible = false;
+            this.pauseButton.inputEnabled = true;
             this.game.paused = false;
             this.game.state.restart();
         });
 
         this.pauseGroup.add(restartBtn);
 
+        // Place both sound buttons at the same coordinates so toggling doesn't move them
+        const soundBtnX = panel.x;
+        const soundBtnY = panel.y + 130;
+
         this.soundOnBtn = this.game.add.sprite(
-            panel.x - 40,
-            panel.y + 60,
+            soundBtnX,
+            soundBtnY,
             'soundOnBtn'
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x - 40,
-            panel.y + 60,
+            soundBtnX,
+            soundBtnY,
             'soundOffBtn'
         );
 
         this.soundOnBtn.anchor.set(0.5);
         this.soundOffBtn.anchor.set(0.5);
+        this.soundOnBtn.scale.set(0.5);
+        this.soundOffBtn.scale.set(0.5);
 
         this.soundOnBtn.inputEnabled = true;
         this.soundOffBtn.inputEnabled = true;
@@ -161,8 +187,24 @@ tinydefence.rungame = {
         this.pauseGroup.add(this.soundOnBtn);
         this.pauseGroup.add(this.soundOffBtn);
 
+        // Reduce interaction hit areas slightly so nearby buttons don't collide
+        try {
+            const shrinkFactor = 0.7; // 70% of sprite area
+
+            const rW = resumeBtn.width;
+            const rH = resumeBtn.height;
+            resumeBtn.input.hitArea = new Phaser.Rectangle(-rW * (shrinkFactor / 2), -rH * (shrinkFactor / 2), rW * shrinkFactor, rH * shrinkFactor);
+            resumeBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
+
+            const rrW = restartBtn.width;
+            const rrH = restartBtn.height;
+            restartBtn.input.hitArea = new Phaser.Rectangle(-rrW * (shrinkFactor / 2), -rrH * (shrinkFactor / 2), rrW * shrinkFactor, rrH * shrinkFactor);
+            restartBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
+        } catch (e) { }
+
         // état initial
-        this.soundOffBtn.visible = false;
+        this.soundOnBtn.visible = this.soundEnabled;
+        this.soundOffBtn.visible = !this.soundEnabled;
 
 
         this.model.currentWave = -1;
@@ -180,6 +222,10 @@ tinydefence.rungame = {
         }
 
         this.music = this.game.backgroundMusic;
+        // restore saved sound state if present
+        if (tinydefence.savedSound) {
+            try { if (this.music) { this.music.mute = !!tinydefence.savedSound.mute; } } catch (e) { }
+        }
 
 
     },
@@ -325,27 +371,46 @@ tinydefence.rungame = {
         }
     },
     togglePause: function (pause) {
-
         if (pause) {
-            this.pauseStartTime = this.game.time.now;
+            // use real time so we can compute duration even if Phaser time is frozen
+            console.log('togglePause(true) - pausing game');
+            this.pauseStartTime = Date.now();
             this.game.paused = true;
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
-            this.music.pause();
+            try { if (this.music && this.music.playing) { this.music.pause(); } } catch (e) { }
+
+            // temporarily disable pause menu buttons to prevent accidental double-clicks
+            for (let i = 0; i < this.pauseGroup.children.length; i++) {
+                try { this.pauseGroup.children[i].inputEnabled = false; } catch (e) { }
+            }
+
+            // re-enable inputs after a short delay
+            setTimeout(() => {
+                this.lastPauseClickTime = Date.now();
+                for (let i = 0; i < this.pauseGroup.children.length; i++) {
+                    try {
+                        this.pauseGroup.children[i].inputEnabled = true;
+                        this.pauseGroup.children[i].inputEnabledDuringPause = true;
+                    } catch (e) { }
+                }
+                console.log('  → pause menu inputs re-enabled after delay');
+            }, this.pauseInputDelay || 200);
+
         } else {
-            let pausedDuration = this.game.time.now - this.pauseStartTime;
+            console.log('togglePause(false) - resuming game');
+            const pausedDuration = Date.now() - (this.pauseStartTime || Date.now());
 
             // ⏱️ On décale les timers
-            this.wavestart += pausedDuration;
-            this.nextEnemy += pausedDuration;
+            if (typeof this.wavestart === 'number') { this.wavestart += pausedDuration; }
+            if (typeof this.nextEnemy === 'number') { this.nextEnemy += pausedDuration; }
 
             this.game.paused = false;
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
 
-            if (!this.music.mute) {
-                this.music.resume();
-            }
+            try { if (this.music && !this.music.mute) { this.music.resume(); } } catch (e) { }
+            console.log('  → game resumed, pausedDuration=' + pausedDuration + 'ms');
         }
     },
 
