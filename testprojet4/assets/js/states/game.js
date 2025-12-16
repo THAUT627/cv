@@ -153,7 +153,7 @@ tinydefence.rungame = {
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x + 80,
+            panel.x - 80,
             panel.y + 200,
             'soundOffBtn'
         );
