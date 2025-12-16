@@ -1,17 +1,13 @@
-# Présentation de la version 1
+## projet2.md — Ajout de nombreux niveaux
 
---- 
+---
 
-## Points amélioré
+Dans cette version, plusieurs nouvelles cartes ont été ajoutées au jeu.
 
-Ajout d’un son au lancement du jeu.
+À l’origine, l’objectif était de créer **un seul niveau** et de faire apparaître une carte différente **aléatoirement à chaque rafraîchissement de la page**.
+N’ayant pas réussi à implémenter ce système de génération aléatoire, une alternative a été choisie :
 
-Le son se déclenche dès le démarrage, marquant l’entrée du joueur dans l’expérience.
+* Ajout de **plusieurs niveaux distincts**
+* Chaque niveau est sélectionné de manière classique
 
-Cette évolution permet :
-
-d’améliorer l’immersion,
-
-de commencer à travailler l’ambiance sonore du jeu.
-
-Le reste du jeu reste similaire à la version initiale (même niveau, même structure).
+Cette solution permet tout de même de proposer une diversité de gameplay malgré la limitation technique rencontrée.
