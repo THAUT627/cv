@@ -131,12 +131,7 @@ tinydefence.rungame = {
         restartBtn.events.onInputUp.add(() => {
             const now = Date.now();
             console.log('>>> RESTART handler called <<<');
-            console.log('► RESTART clicked at', now, '(lastPause was', this.lastPauseClickTime, ', diff=', now - this.lastPauseClickTime, ')');
-            if (now - (this.lastPauseClickTime || 0) < 300) {
-                // likely the same pointer event that resumed/paused — ignore
-                console.log('  ✗ RESTART ignored (too close to last pause action)');
-                return;
-            }
+            console.log('► RESTART clicked at', now);
             try { if (this.music && this.music.isPlaying) { this.music.stop(); } } catch (e) {}
             this.game.paused = false;
             console.log('  ✓ RESTART executing game.state.restart()');
@@ -146,19 +141,21 @@ tinydefence.rungame = {
         this.pauseGroup.add(restartBtn);
 
         this.soundOnBtn = this.game.add.sprite(
-            panel.x - 40,
-            panel.y + 60,
+            panel.x - 50,
+            panel.y + 70,
             'soundOnBtn'
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x - 40,
-            panel.y + 60,
+            panel.x + 50,
+            panel.y + 70,
             'soundOffBtn'
         );
 
         this.soundOnBtn.anchor.set(0.5);
         this.soundOffBtn.anchor.set(0.5);
+        this.soundOnBtn.scale.set(0.6);
+        this.soundOffBtn.scale.set(0.6);
 
         this.soundOnBtn.inputEnabled = true;
         this.soundOffBtn.inputEnabled = true;
