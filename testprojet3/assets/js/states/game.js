@@ -6,6 +6,8 @@ tinydefence.rungame = {
     soundOnBtn: null,
     soundOffBtn: null,
     pauseStartTime: 0,
+    pauseActionLock: false,
+    lastPauseClickTime: 0,
     lastPauseClickTime: 0,
 
 
@@ -59,8 +61,11 @@ tinydefence.rungame = {
         this.pauseButton.fixedToCamera = true;
 
         this.pauseButton.events.onInputUp.add(() => {
+            if (this.pauseActionLock) { return; }
+            this.pauseActionLock = true;
             this.togglePause(true);
             this.lastPauseClickTime = Date.now();
+            setTimeout(() => { this.pauseActionLock = false; }, 400);
         });
 
         // ---- PAUSE MENU GROUP ----
@@ -98,9 +103,12 @@ tinydefence.rungame = {
 
 
         resumeBtn.events.onInputUp.add(() => {
+            if (this.pauseActionLock) { return; }
+            this.pauseActionLock = true;
             console.log('resumeBtn clicked');
             this.lastPauseClickTime = Date.now();
             this.togglePause(false);
+            setTimeout(() => { this.pauseActionLock = false; }, 400);
         });
 
         this.pauseGroup.add(resumeBtn);
@@ -120,14 +128,20 @@ tinydefence.rungame = {
 
 
         restartBtn.events.onInputUp.add(() => {
+            if (this.pauseActionLock) { return; }
+            this.pauseActionLock = true;
             const now = Date.now();
-            // ignore near-duplicate clicks that likely come from the same pointer event
             if (now - (this.lastPauseClickTime || 0) < 300) {
                 console.log('Ignored restart: duplicate click after resume/pause');
+                this.pauseActionLock = false;
                 return;
+            }
+            if (this.music && this.music.isPlaying) {
+                try { this.music.stop(); } catch (e) { }
             }
             this.game.paused = false;
             this.game.state.restart();
+            setTimeout(() => { this.pauseActionLock = false; }, 400);
         });
 
         this.pauseGroup.add(restartBtn);
@@ -175,7 +189,10 @@ tinydefence.rungame = {
         this.nextWaveOrLevel();
 
         this.game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(() => {
+            if (this.pauseActionLock) { return; }
+            this.pauseActionLock = true;
             this.togglePause(!this.game.paused);
+            setTimeout(() => { this.pauseActionLock = false; }, 400);
         });
 
         if (!this.game.backgroundMusic) {
