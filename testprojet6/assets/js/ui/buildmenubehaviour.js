@@ -9,11 +9,17 @@ class BuildMenuBehaviour {
 
             let coords = this.defencegame.screenToTileCoords(x, y);
 
+            const towerTypeObj = (tinydefence.towerManager && typeof tinydefence.towerManager.getTowerType === 'function') ? tinydefence.towerManager.getTowerType(towerType) : null;
+            if (!towerTypeObj) {
+                console.warn('BuildMenuBehaviour: unknown towerType', towerType);
+                return;
+            }
+
             let tower = new Tower(
                 this.defencegame.game,
                 coords.x * this.defencegame.twidth,
                 coords.y * this.defencegame.twidth,
-                tinydefence.towerManager.getTowerType(towerType) // ✅ ICI
+                towerTypeObj
             );
 
             if (this.defencegame.model.money >= tower.getPrice(tower.tier)) {
@@ -53,8 +59,13 @@ class BuildMenuBehaviour {
         tinydefence.game.ui.buildmenu.onHoverBuildTower(
             // On hover
             (towerType) => {
-                let tower = tinydefence.towerManager.getTowerType(towerType);
-                let price = tower.tiers[0].attributes.price;
+                const tower = (tinydefence.towerManager && typeof tinydefence.towerManager.getTowerType === 'function') ? tinydefence.towerManager.getTowerType(towerType) : null;
+                if (!tower || !Array.isArray(tower.tiers) || tower.tiers.length === 0 || !tower.tiers[0] || !tower.tiers[0].attributes) {
+                    tinydefence.game.ui.setPrice(null);
+                    return;
+                }
+
+                const price = tower.tiers[0].attributes.price;
                 tinydefence.game.ui.setPrice(price,
                     Number.isInteger(price) && price <= this.defencegame.model.money ? 'green' : 'red');
             },
