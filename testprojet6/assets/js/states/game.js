@@ -6,6 +6,8 @@ tinydefence.rungame = {
     soundOnBtn: null,
     soundOffBtn: null,
     pauseStartTime: 0,
+    lastPauseClickTime: 0,
+    pauseInputDelay: 200,
 
 
 
@@ -13,17 +15,15 @@ tinydefence.rungame = {
     },
 
     create: function () {
-        tinydefence.towerManager.init();
-        tinydefence.towerManager.load(); // ⭐ LIGNE MANQUANTE ⭐
-        console.log(tinydefence.towerManager.towerTypes.map(t => t.key));
-            // Enable input
-        this.soundEnabled = true;
+        // ensure tower manager ready for this project
+        try { tinydefence.towerManager.init(); } catch (e) {}
+        try { tinydefence.towerManager.load(); } catch (e) {}
+
+        this.soundEnabled = (tinydefence.savedSound ? tinydefence.savedSound.enabled : true);
         this.game.input.enabled = true;
         this.game.input.enabledDuringPause = true;
-        // Set cavans background
+        // Set canvas background
         this.game.stage.backgroundColor = "#1e1a17";
-        // this.music = this.game.add.audio("background_music", 0.5, true); // volume, loop
-        // this.music.play();
         this.game.time.advancedTiming = true;
         this.game.time.desiredFps = 60;
         this.game.time.slowMotion = 1.0;
@@ -33,153 +33,135 @@ tinydefence.rungame = {
             currentMapIndex: tinydefence.game.model.currentMapIndex,
             money: tinydefence.game.model.money,
             currentWave: tinydefence.game.model.currentWave,
-            let resumeBtn = this.game.add.sprite(
-                panel.x,
-                panel.y - 60,
-                'resumeBtn'
-            );
+            lives: tinydefence.game.model.lives,
+        }
 
-            resumeBtn.anchor.set(0.5);
-            resumeBtn.scale.set(0.7);
-            resumeBtn.inputEnabled = true;
-            resumeBtn.fixedToCamera = true;
-            resumeBtn.input.useHandCursor = true;
-            resumeBtn.inputEnabledDuringPause = true;
-            console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 60) + ', scale=0.7');
+        tinydefence.game.ui = new UI(tinydefence.game);
 
-            resumeBtn.events.onInputDown.add(() => {
-                console.log('resumeBtn.onInputDown triggered');
-            });
+        this.gameEnd = false;
 
-            resumeBtn.events.onInputUp.add(() => {
-                console.log('>>> RESUME handler called <<<');
-                this.lastPauseClickTime = Date.now();
-                console.log('► RESUME clicked at', this.lastPauseClickTime);
-                this.togglePause(false);
-            });
+        this.createMap();
 
-            this.pauseGroup.add(resumeBtn);
+        // ---- PAUSE BUTTON ----
+        this.pauseButton = this.game.add.sprite(
+            this.game.camera.width - 40,
+            10,
+            'pauseBtn'
+        );
 
-            let restartBtn = this.game.add.sprite(
-                panel.x,
-                panel.y + 20,
-                'restartBtn'
-            );
+        console.log('pauseButton =', this.pauseButton);
 
-            restartBtn.anchor.set(0.5);
-            restartBtn.scale.set(0.7);
-            restartBtn.inputEnabled = true;
-            restartBtn.fixedToCamera = true;
-            restartBtn.input.useHandCursor = true;
-            restartBtn.inputEnabledDuringPause = true;
-            console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 20) + ', scale=0.7');
+        if (!this.pauseButton) {
+            console.error('Pause button not created');
+            return;
+        }
 
-            restartBtn.events.onInputDown.add(() => {
-                console.log('restartBtn.onInputDown triggered');
-            });
+        this.pauseButton.inputEnabled = true;
+        this.pauseButton.input.useHandCursor = true;
+        this.pauseButton.fixedToCamera = true;
 
-            restartBtn.events.onInputUp.add(() => {
-                try {
-                    tinydefence.savedSound = {
-                        enabled: this.soundEnabled,
-                        mute: (this.music ? !!this.music.mute : false)
-                    };
-                } catch (e) {}
+        this.pauseButton.events.onInputUp.add(() => {
+            this.togglePause(true);
+        });
 
-                this.pauseGroup.visible = false;
-                this.pauseButton.inputEnabled = true;
-                this.game.paused = false;
-                this.game.state.restart();
-            });
+        // ---- PAUSE MENU GROUP ----
+        this.pauseGroup = this.game.add.group();
+        this.pauseGroup.visible = false;
 
-            this.pauseGroup.add(restartBtn);
+        // Background panel
+        let panel = this.game.add.sprite(
+            this.game.camera.width / 2,
+            this.game.camera.height / 2,
+            'pauseMenu'
+        );
+        panel.anchor.set(0.5);
+        panel.fixedToCamera = true;
+        this.pauseButton.inputEnabledDuringPause = true;
+        this.pauseGroup.add(panel);
 
-            // Place both sound buttons at the same coordinates so toggling doesn't move them
-            const soundBtnX = panel.x;
-            const soundBtnY = panel.y + 130;
+        this.game.world.bringToTop(this.pauseGroup);
 
-            this.soundOnBtn = this.game.add.sprite(
-                soundBtnX,
-                soundBtnY,
-                'soundOnBtn'
-            );
+        let resumeBtn = this.game.add.sprite(
+            panel.x,
+            panel.y - 60,
+            'resumeBtn'
+        );
 
-            this.soundOffBtn = this.game.add.sprite(
-                soundBtnX,
-                soundBtnY,
-                'soundOffBtn'
-            );
+        resumeBtn.anchor.set(0.5);
+        resumeBtn.scale.set(0.7);
+        resumeBtn.inputEnabled = true;
+        resumeBtn.fixedToCamera = true;
+        resumeBtn.input.useHandCursor = true;
+        resumeBtn.inputEnabledDuringPause = true;
+        console.log('resumeBtn created at x=' + panel.x + ', y=' + (panel.y - 60) + ', scale=0.7');
 
-            this.soundOnBtn.anchor.set(0.5);
-            this.soundOffBtn.anchor.set(0.5);
-            this.soundOnBtn.scale.set(0.5);
-            this.soundOffBtn.scale.set(0.5);
+        resumeBtn.events.onInputDown.add(() => {
+            console.log('resumeBtn.onInputDown triggered');
+        });
 
-            this.soundOnBtn.inputEnabled = true;
-            this.soundOffBtn.inputEnabled = true;
-            this.soundOnBtn.fixedToCamera = true;
-            this.soundOffBtn.fixedToCamera = true;
-            this.soundOnBtn.inputEnabledDuringPause = true;
-            this.soundOffBtn.inputEnabledDuringPause = true;
+        resumeBtn.events.onInputUp.add(() => {
+            console.log('>>> RESUME handler called <<<');
+            this.lastPauseClickTime = Date.now();
+            console.log('► RESUME clicked at', this.lastPauseClickTime);
+            this.togglePause(false);
+        });
 
-            this.soundOnBtn.events.onInputUp.add(() => {
-                this.toggleSound(false);
-            });
+        this.pauseGroup.add(resumeBtn);
 
-            this.soundOffBtn.events.onInputUp.add(() => {
-                this.toggleSound(true);
-            });
+        let restartBtn = this.game.add.sprite(
+            panel.x,
+            panel.y + 20,
+            'restartBtn'
+        );
 
-            this.pauseGroup.add(this.soundOnBtn);
-            this.pauseGroup.add(this.soundOffBtn);
-
-            // état initial
-            this.soundOnBtn.visible = this.soundEnabled;
-            this.soundOffBtn.visible = !this.soundEnabled;
-
-            // Reduce interaction hit areas slightly so nearby buttons don't collide
-            try {
-                const shrinkFactor = 0.7; // 70% of sprite area
-
-                const rW = resumeBtn.width;
-                const rH = resumeBtn.height;
-                resumeBtn.input.hitArea = new Phaser.Rectangle(-rW * (shrinkFactor/2), -rH * (shrinkFactor/2), rW * shrinkFactor, rH * shrinkFactor);
-                resumeBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
-
-                const rrW = restartBtn.width;
-                const rrH = restartBtn.height;
-                restartBtn.input.hitArea = new Phaser.Rectangle(-rrW * (shrinkFactor/2), -rrH * (shrinkFactor/2), rrW * shrinkFactor, rrH * shrinkFactor);
-                restartBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
-            } catch (e) {}
         restartBtn.anchor.set(0.5);
+        restartBtn.scale.set(0.7);
         restartBtn.inputEnabled = true;
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
+        console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 20) + ', scale=0.7');
 
-
+        restartBtn.events.onInputDown.add(() => {
+            console.log('restartBtn.onInputDown triggered');
+        });
 
         restartBtn.events.onInputUp.add(() => {
+            try {
+                tinydefence.savedSound = {
+                    enabled: this.soundEnabled,
+                    mute: (this.music ? !!this.music.mute : false)
+                };
+            } catch (e) {}
+
+            this.pauseGroup.visible = false;
+            this.pauseButton.inputEnabled = true;
             this.game.paused = false;
             this.game.state.restart();
         });
 
         this.pauseGroup.add(restartBtn);
 
+        // Place both sound buttons at the same coordinates so toggling doesn't move them
+        const soundBtnX = panel.x;
+        const soundBtnY = panel.y + 130;
+
         this.soundOnBtn = this.game.add.sprite(
-            panel.x - 40,
-            panel.y + 60,
+            soundBtnX,
+            soundBtnY,
             'soundOnBtn'
         );
 
         this.soundOffBtn = this.game.add.sprite(
-            panel.x - 40,
-            panel.y + 60,
+            soundBtnX,
+            soundBtnY,
             'soundOffBtn'
         );
 
         this.soundOnBtn.anchor.set(0.5);
         this.soundOffBtn.anchor.set(0.5);
+        this.soundOnBtn.scale.set(0.5);
+        this.soundOffBtn.scale.set(0.5);
 
         this.soundOnBtn.inputEnabled = true;
         this.soundOffBtn.inputEnabled = true;
@@ -187,8 +169,6 @@ tinydefence.rungame = {
         this.soundOffBtn.fixedToCamera = true;
         this.soundOnBtn.inputEnabledDuringPause = true;
         this.soundOffBtn.inputEnabledDuringPause = true;
-
-
 
         this.soundOnBtn.events.onInputUp.add(() => {
             this.toggleSound(false);
@@ -202,8 +182,23 @@ tinydefence.rungame = {
         this.pauseGroup.add(this.soundOffBtn);
 
         // état initial
-        this.soundOffBtn.visible = false;
+        this.soundOnBtn.visible = this.soundEnabled;
+        this.soundOffBtn.visible = !this.soundEnabled;
 
+        // Reduce interaction hit areas slightly so nearby buttons don't collide
+        try {
+            const shrinkFactor = 0.7; // 70% of sprite area
+
+            const rW = resumeBtn.width;
+            const rH = resumeBtn.height;
+            resumeBtn.input.hitArea = new Phaser.Rectangle(-rW * (shrinkFactor/2), -rH * (shrinkFactor/2), rW * shrinkFactor, rH * shrinkFactor);
+            resumeBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
+
+            const rrW = restartBtn.width;
+            const rrH = restartBtn.height;
+            restartBtn.input.hitArea = new Phaser.Rectangle(-rrW * (shrinkFactor/2), -rrH * (shrinkFactor/2), rrW * shrinkFactor, rrH * shrinkFactor);
+            restartBtn.input.hitAreaCallback = Phaser.Rectangle.contains;
+        } catch (e) {}
 
         this.model.currentWave = -1;
         this.nextWaveOrLevel();
@@ -220,6 +215,10 @@ tinydefence.rungame = {
         }
 
         this.music = this.game.backgroundMusic;
+        // restore saved sound state if present
+        if (tinydefence.savedSound) {
+            try { if (this.music) { this.music.mute = !!tinydefence.savedSound.mute; } } catch (e) {}
+        }
 
 
     },
@@ -360,7 +359,7 @@ tinydefence.rungame = {
 
         // Is the player dead?
         if (this.model.lives <= 0) {
-            tinydefence.game.ui.setFullText("You lost the game");
+            this.game.ui.setFullText("You lost the game");
             this.gameEnd = true;
         }
     },
