@@ -7,8 +7,6 @@ tinydefence.rungame = {
     soundOffBtn: null,
     pauseStartTime: 0,
 
-    isPaused: false,
-
 
 
     preload: function () {
@@ -118,7 +116,7 @@ tinydefence.rungame = {
 
 
         restartBtn.events.onInputUp.add(() => {
-            this.isPaused = false;
+            this.game.paused = false;
             this.game.state.restart();
         });
 
@@ -167,7 +165,7 @@ tinydefence.rungame = {
         this.nextWaveOrLevel();
 
         this.game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(() => {
-            this.togglePause(!this.isPaused);
+            this.togglePause(!this.game.paused);
         });
 
         if (!this.game.backgroundMusic) {
@@ -325,26 +323,28 @@ tinydefence.rungame = {
     togglePause: function (pause) {
 
         if (pause) {
-            this.pauseStartTime = this.game.time.now;
-            this.isPaused = true;
+            // store a real timestamp so we can compute paused duration even when Phaser time is frozen
+            this.pauseStartTime = Date.now();
+            this.game.paused = true;
             this.pauseGroup.visible = true;
             this.pauseButton.inputEnabled = false;
-            if (this.music && this.music.isPlaying) {
-                try { this.music.pause(); } catch (e) { /* ignore */ }
+            if (this.music && this.music.playing) {
+                try { this.music.pause(); } catch (e) { }
             }
         } else {
-            let pausedDuration = this.game.time.now - this.pauseStartTime;
+            // compute real paused duration
+            let pausedDuration = Date.now() - (this.pauseStartTime || Date.now());
 
-            // ⏱️ On décale les timers
-            this.wavestart += pausedDuration;
-            this.nextEnemy += pausedDuration;
+            // ⏱️ On décale les timers (si définis)
+            if (typeof this.wavestart === 'number') { this.wavestart += pausedDuration; }
+            if (typeof this.nextEnemy === 'number') { this.nextEnemy += pausedDuration; }
 
-            this.isPaused = false;
+            this.game.paused = false;
             this.pauseGroup.visible = false;
             this.pauseButton.inputEnabled = true;
 
             if (this.music && !this.music.mute) {
-                try { this.music.resume(); } catch (e) { /* ignore */ }
+                try { this.music.resume(); } catch (e) { }
             }
         }
     },
