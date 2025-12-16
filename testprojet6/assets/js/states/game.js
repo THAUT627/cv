@@ -13,6 +13,10 @@ tinydefence.rungame = {
     },
 
     create: function () {
+        tinydefence.towerManager.init();
+        tinydefence.towerManager.load(); // ⭐ LIGNE MANQUANTE ⭐
+        console.log(tinydefence.towerManager.towerTypes.map(t => t.key));
+            // Enable input
         this.soundEnabled = true;
         this.game.input.enabled = true;
         this.game.input.enabledDuringPause = true;

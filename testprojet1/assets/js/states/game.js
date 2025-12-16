@@ -8,7 +8,8 @@ tinydefence.rungame = {
     create: function() {
         // Set cavans background
         this.game.stage.backgroundColor = "#1e1a17";
-
+        this.music = this.game.add.audio("background_music", 0.5, true); // volume, loop
+        this.music.play();
         this.game.time.advancedTiming = true;
         this.game.time.desiredFps = 60;
         this.game.time.slowMotion = 1.0;

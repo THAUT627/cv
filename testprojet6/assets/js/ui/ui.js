@@ -15,28 +15,28 @@ class UI {
 
         this.waveText = this.game.add.bitmapText(
             5, this.game.height - 32,
-            'font_white', 
+            'font_white',
             "",
             32);
         this.moneyText = this.game.add.bitmapText(
             this.game.width / 2, this.game.height - 32,
-            'font_white', 
+            'font_white',
             "$: xxx",
             32);
         this.priceText = this.game.add.bitmapText(
             0, this.game.height - 32,
-            'font_green', 
+            'font_green',
             "",
             32);
         this.liveText = this.game.add.bitmapText(
             this.game.width, this.game.height - 32,
-            'font_white', 
+            'font_white',
             "",
             32);
-      
+
         // Center moneyText only once
         this.moneyText.x = this.game.width / 2 - this.moneyText.textWidth / 2;
-      
+
         // Toggle button to show the complete coverage by all towers 
         this.buttonCoverage = this.game.add.button(0, 0, 'buttonCoverage', this.onToggleCoverage, this, 0, 0, 0);
         this.buttonCoverage.scale.setTo(tinydefence.scalefactor, tinydefence.scalefactor);
@@ -47,6 +47,10 @@ class UI {
         this.buttonCoverage.onInputOut.add(() => this.isOverMenu = false, this);
 
         this.buildmenu = new Buildmenu();
+        this.buildmenu.onBuildTower((type, x, y) => {
+            console.log('UI received build:', type);
+            tinydefence.gameState.buildTower(type, x, y);
+        });
     }
 
     isCursorOverMenu() {
@@ -61,8 +65,8 @@ class UI {
     onToggleCoverage() {
         console.log("Coverage toggled");
         this.showCompleteCoverage = !this.showCompleteCoverage;
-        
-        if(this.showCompleteCoverage) {
+
+        if (this.showCompleteCoverage) {
             this.buttonCoverage.setFrames(1, 1, 1);
         } else {
             this.buttonCoverage.setFrames(0, 0, 0);
@@ -86,12 +90,10 @@ class UI {
 
     setPrice(price, color) {
         this.price = price;
-        if (color === 'green' || color === 'red')
-        {
+        if (color === 'green' || color === 'red') {
             this.priceColor = color
         }
-        else
-        {
+        else {
             this.priceColor = 'white';
         }
         this.updateTexts();
@@ -107,8 +109,7 @@ class UI {
         this.waveText.setText(text);
     }
 
-    updateTexts()
-    {
+    updateTexts() {
         this.waveText.setText(`Wave: ${this.currentWave}/${this.maxWave}`);
         this.moneyText.setText(`$: ${this.money}`);
         this.priceText.font = 'font_' + this.priceColor;
@@ -120,8 +121,7 @@ class UI {
         this.liveText.x = this.game.width - this.liveText.textWidth - 5;
     }
 
-    clearTexts()
-    {
+    clearTexts() {
         this.waveText.setText("");
         this.moneyText.setText("");
         this.priceText.setText("");

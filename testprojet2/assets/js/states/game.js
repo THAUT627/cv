@@ -42,8 +42,19 @@ tinydefence.rungame = {
         this.layer = this.map.createLayer('Level');
         this.layer.scale.setTo(tinydefence.scalefactor, tinydefence.scalefactor);
         
-        let mapdata = this.game.cache.getTilemapData(this.currentMap.key).data.layers[0].data;
-        let waypointdata = this.game.cache.getTilemapData(this.currentMap.key).data.layers[1].data;
+        const tilemapData = this.game.cache.getTilemapData(this.currentMap.key).data;
+
+const levelLayer = tilemapData.layers.find(l => l.name === 'Level');
+const waypointLayer = tilemapData.layers.find(l => l.name === 'Waypoints');
+
+if (!levelLayer || !waypointLayer) {
+    console.error('Layer Level ou Waypoints manquant dans', this.currentMap.key);
+    return;
+}
+
+const mapdata = levelLayer.data;
+const waypointdata = waypointLayer.data;
+
 
         this.defencegame = new DefenceGame(
             tinydefence.constants.TILE_WIDTH * tinydefence.scalefactor, 

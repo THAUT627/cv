@@ -1,10 +1,11 @@
 var tinydefence = tinydefence || {};
 
 tinydefence.preload = function (game) { };
-
+tinydefence.towerManager = new TowerManager(this.game);
 tinydefence.preload.prototype = {
 
 	preload: function () {
+		tinydefence.towerManager.load();
 		this.game.load.image('logo', 'testprojet6/assets/images/logo.png');
 		this.game.load.spritesheet('selection', 'testprojet6/assets/images/selection.png', 16, 16);
 		this.game.load.spritesheet('enemy', 'testprojet6/assets/images/enemy.png', 16, 16);
@@ -42,9 +43,6 @@ tinydefence.preload.prototype = {
 			this.game.load.tilemap(map.key, map.data, null, Phaser.Tilemap.TILED_JSON);
 			this.game.load.image(map.key + '_sprites', map.sprite);
 		});
-
-		// Load all tower assets
-		tinydefence.towerManager.load();
 	},
 
 	create: function () {

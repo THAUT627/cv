@@ -4,31 +4,56 @@ class TowerManager {
 		this.game = game;
 
 		this.towerTypes = [
-		    {
-		        key: 'Cannon'
-		    }
+			{
+				key: 'Cannon'
+			},
+			{
+				key: 'antiChicken'
+			}
 		];
-
-		this.towerTypes.forEach(tower => {
-			this.game.load.json(tower.key + '_properties', 'testprojet6/assets/towers/' + tower.key + '/properties.json');
-		});
 	}
 
 	load() {
 		this.towerTypes.forEach(tower => {
-		    let towerProperties = this.game.cache.getJSON(tower.key + '_properties');
-		    tower.color = towerProperties.color;
-		    tower.tiers = towerProperties.tiers;
+			const basePath = 'testprojet6/assets/towers/' + tower.key + '/';
 
-		    towerProperties.tiers.forEach((tier, i) => {
-				// TODO tier specific spritesheets
-				let path = 'testprojet6/assets/towers/' + tower.key + '/';
-				tier.spritesheet_tower = tower.key + '_' + i  + '_spritesheet_tower';
-				tier.spritesheet_shot = tower.key + '_' + i  + '_spritesheet_shot';
+			// load JSON
+			this.game.load.json(
+				tower.key + '_properties',
+				basePath + 'properties.json'
+			);
 
-				this.game.load.spritesheet(tier.spritesheet_tower, path + tier.sprites.tower, 16, 16);
-				this.game.load.image(tier.spritesheet_shot, path + tier.sprites.shot);
-		    });
+			// ⚠️ on précharge aussi les sprites ici
+			// (on sait qu'il n'y a qu'un tier pour l’instant)
+			this.game.load.spritesheet(
+				tower.key + '_0_tower',
+				basePath + 'tower_1.png',
+				16, 16
+			);
+
+			this.game.load.image(
+				tower.key + '_0_shot',
+				basePath + 'bullet_1.png'
+			);
+		});
+	}
+
+	init() {
+		this.towerTypes.forEach(tower => {
+			const props = this.game.cache.getJSON(tower.key + '_properties');
+
+			if (!props) {
+				console.error('JSON manquant pour', tower.key);
+				return;
+			}
+
+			tower.color = props.color;
+			tower.tiers = props.tiers;
+
+			props.tiers.forEach((tier, i) => {
+				tier.spritesheet_tower = tower.key + '_' + i + '_tower';
+				tier.spritesheet_shot = tower.key + '_' + i + '_shot';
+			});
 		});
 	}
 
