@@ -125,14 +125,21 @@ class Buildmenu {
         this.buildTowerCallback = callback;
         this.buildButtons = [];
 
-        tinydefence.towerManager.towerTypes.forEach(towerType => {
+        const towerTypes = (tinydefence.towerManager && Array.isArray(tinydefence.towerManager.towerTypes)) ? tinydefence.towerManager.towerTypes : [];
 
-            let key = towerType.tiers[0].spritesheet_tower;
+        towerTypes.forEach(towerType => {
+            if (!towerType || !Array.isArray(towerType.tiers) || towerType.tiers.length === 0) {
+                return; // skip malformed towerType
+            }
+
+            // prefer explicit spritesheet key, fall back gracefully
+            const tier0 = towerType.tiers[0] || {};
+            const key = tier0.spritesheet_tower || tier0.spritesheet || null;
+            if (!key) return;
 
             let button = tinydefence.game.add.button(0, 0, key, () => {
                 let params = this.menu.params;
 
-                // ✅ le type vient UNIQUEMENT du bouton
                 this.buildTowerCallback(
                     towerType.key,
                     params.x,
