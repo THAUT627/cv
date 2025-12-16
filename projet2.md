@@ -2,12 +2,10 @@
 
 ---
 
-Dans cette version, plusieurs nouvelles cartes ont été ajoutées au jeu.
+Dans cette version, j'ai ajouté plusieurs nouvelles cartes au jeu.
 
-À l’origine, l’objectif était de créer **un seul niveau** et de faire apparaître une carte différente **aléatoirement à chaque rafraîchissement de la page**.
-N’ayant pas réussi à implémenter ce système de génération aléatoire, une alternative a été choisie :
+À l’origine, l’objectif était de créer un seul niveau et de faire apparaître une carte différente aléatoirement à chaque rafraîchissement de la page.
+Mais je n'ai pas réussi à implémenter ce système de génération aléatoire, j'ai opté pour une alternative :
 
-* Ajout de **plusieurs niveaux distincts**
-* Chaque niveau est sélectionné de manière classique
-
-Cette solution permet tout de même de proposer une diversité de gameplay malgré la limitation technique rencontrée.
+* Ajout de plusieurs niveaux distincts
+* Chaque niveau est sélectionné de manière classique selon l'envie du joueur.

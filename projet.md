@@ -50,3 +50,56 @@ Types d’ennemis variés :
 - Titan de magma (boss de fin).
 Système d’amélioration de tours (niveaux de puissance).
 
+# Fonctionnement général
+
+flowchart TD
+    A[Démarrage du jeu] --> B[Chargement des assets]
+    B --> B1[Sprites]
+    B --> B2[Sons & musiques]
+    B --> B3[Maps]
+    B --> C[Initialisation du jeu]
+
+    C --> D[Choix de la carte]
+    D --> E[Lancement de la partie]
+
+    E --> F[Initialisation UI]
+    F --> F1[Argent]
+    F --> F2[Vies]
+    F --> F3[Vague actuelle]
+
+    E --> G[Début des vagues]
+
+    G --> H[Spawn des ennemis]
+    H --> I[Déplacement des ennemis sur la map]
+
+    I --> J{Ennemi atteint la fin ?}
+    J -- Oui --> K[Perte de vie]
+    J -- Non --> L[Attaque des tours]
+
+    L --> M{Ennemi tué ?}
+    M -- Oui --> N[Gain d'argent]
+    M -- Non --> I
+
+    K --> O{Vies > 0 ?}
+    O -- Oui --> G
+    O -- Non --> P[Défaite]
+
+    N --> Q{Vague terminée ?}
+    Q -- Non --> H
+    Q -- Oui --> R{Dernière vague ?}
+
+    R -- Non --> G
+    R -- Oui --> S[Victoire]
+
+    %% Placement des tours
+    F --> T[Ouverture du menu de construction]
+    T --> U[Sélection d'une tour]
+    U --> V{Assez d'argent ?}
+    V -- Oui --> W[Placement de la tour]
+    V -- Non --> X[Action refusée]
+
+    %% Menu pause
+    E --> Y[Pause]
+    Y --> Z[Jeu et sons stoppés]
+    Z --> AA[Reprendre ou recommencer]
+
