@@ -129,11 +129,10 @@ tinydefence.rungame = {
         });
 
         restartBtn.events.onInputUp.add(() => {
-            const now = Date.now();
-            console.log('>>> RESTART handler called <<<');
-            console.log('► RESTART clicked at', now);
+            // Restart the game cleanly: hide pause UI and restart state.
+            this.pauseGroup.visible = false;
+            this.pauseButton.inputEnabled = true;
             this.game.paused = false;
-            console.log('  ✓ RESTART executing game.state.restart()');
             this.game.state.restart();
         });
 
