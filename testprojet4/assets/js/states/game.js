@@ -122,7 +122,7 @@ tinydefence.rungame = {
         restartBtn.fixedToCamera = true;
         restartBtn.input.useHandCursor = true;
         restartBtn.inputEnabledDuringPause = true;
-        restartBtn.input.priorityID = 10;
+        if (restartBtn.input) { restartBtn.input.priorityID = 10; }
         console.log('restartBtn created at x=' + panel.x + ', y=' + (panel.y + 50) + ', scale=0.7');
 
         restartBtn.events.onInputDown.add(() => {
@@ -163,8 +163,8 @@ tinydefence.rungame = {
         this.soundOffBtn.anchor.set(0.5);
         this.soundOnBtn.scale.set(0.5);
         this.soundOffBtn.scale.set(0.5);
-        this.soundOnBtn.input.priorityID = 1;
-        this.soundOffBtn.input.priorityID = 1;
+        if (this.soundOnBtn.input) { this.soundOnBtn.input.priorityID = 1; }
+        if (this.soundOffBtn.input) { this.soundOffBtn.input.priorityID = 1; }
 
         this.soundOnBtn.inputEnabled = true;
         this.soundOffBtn.inputEnabled = true;
